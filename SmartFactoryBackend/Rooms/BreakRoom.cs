@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text.Json;
 using System.Threading.Tasks;
+using DotNetEnv;
 using SmartFactoryBackend.Sensors;
 
 namespace SmartFactoryBackend.Models
@@ -14,7 +15,6 @@ namespace SmartFactoryBackend.Models
         public List<Sensor> Sensors { get; set; }
 
         private static readonly HttpClient client = new HttpClient();
-
         public BreakRoom(string roomName)
         {
             RoomName = roomName;
@@ -74,7 +74,8 @@ namespace SmartFactoryBackend.Models
 
         private static string GetApiToken()
         {
-        //return token
+            var token = Env.GetString("TOKEN");
+            return token;
         }
 
         public void DisplaySensorData()

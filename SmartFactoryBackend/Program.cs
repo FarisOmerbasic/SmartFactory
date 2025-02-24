@@ -1,11 +1,18 @@
 ﻿using System;
 using System.Threading.Tasks;
+using DotNetEnv;
 using SmartFactoryBackend.Models;
 
-class Program
+public class Program
 {
     static async Task Main()
     {
+        Env.Load("C:\\Users\\User\\Documents\\GitHub\\SmartFactory\\SmartFactoryBackend\\.env");
+
+
+        var stringNeki = Env.GetString("TOKEN");
+        Console.WriteLine(stringNeki);
+
         // Kreiranje instance prostorije "BreakRoom"
         BreakRoom breakRoom = new BreakRoom("Employee Break Room");
 
