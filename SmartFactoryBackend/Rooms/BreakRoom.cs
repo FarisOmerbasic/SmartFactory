@@ -40,13 +40,12 @@ namespace SmartFactoryBackend.Models
                 response.EnsureSuccessStatusCode();
 
                 string responseBody = await response.Content.ReadAsStringAsync();
-                Console.WriteLine($"Raw API Response:\n{responseBody}\n"); // Ispis sirovog odgovora
+                Console.WriteLine($"Raw API Response:\n{responseBody}\n");
 
                 List<Sensor> allSensors = JsonSerializer.Deserialize<List<Sensor>>(responseBody);
 
                 foreach (var sensor in allSensors)
                 {
-                    // Ispis svih informacija senzora
                     Console.WriteLine($"--- Sensor Data for {sensor.Name} ---");
                     Console.WriteLine($"ID: {sensor.Id}");
                     Console.WriteLine($"Numeric Value: {sensor.NumericValue} {sensor.Unit}");
@@ -56,8 +55,6 @@ namespace SmartFactoryBackend.Models
                     Console.WriteLine($"Update Interval: {sensor.UpdateInterval} seconds");
                     Console.WriteLine($"Groups: {sensor.Group1}, {sensor.Group2}, {sensor.Group3}");
                     Console.WriteLine();
-
-                    // Možete dodati senzore u listu ako želite
                     if (sensor.Group1 == RoomName)
                     {
                         Sensors.Add(sensor);
