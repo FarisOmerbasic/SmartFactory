@@ -27,19 +27,19 @@ namespace SmartFactoryBackend.Sensors
         public double Longitude { get; set; } = 0.0;
 
 
-        // Prazan konstruktor potreban za deserialization
+      
         public Sensor() { }
 
         public Sensor(string sensorId, string sensorType)
         {
             Id = sensorId;
-            Name = sensorType; // Postavite naziv
+            Name = sensorType; 
             IsActive = true;
         }
 
         public double GetSensorValue(Sensor sensor)
         {
-            return sensor.NumericValue; // Vraća vrednost senzora
+            return sensor.NumericValue;
         }
 
         public void ToggleSensor(bool status)
