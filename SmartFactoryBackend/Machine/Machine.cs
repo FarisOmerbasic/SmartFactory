@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using SmartFactoryBackend.Sensors;
 
 namespace SmartFactoryBackend.Machines
 {
@@ -46,7 +47,7 @@ namespace SmartFactoryBackend.Machines
             {
                 try
                 {
-                    double value = sensor.GetSensorValue();
+                    double value = sensor.GetSensorValue(sensor);
                     if (value < sensor.LowerBound || value > sensor.UpperBound)
                     {
                         Console.WriteLine($"Warning: {sensor.Name} on {MachineType} in {RoomName} exceeded safe range! (Value: {value})");
@@ -115,7 +116,7 @@ namespace SmartFactoryBackend.Machines
 
             foreach (var sensor in Sensors)
             {
-                Console.WriteLine($"- {sensor.Name}: {sensor.GetSensorValue()} (Safe Range: {sensor.LowerBound} to {sensor.UpperBound})");
+                Console.WriteLine($"- {sensor.Name}: {sensor.GetSensorValue(sensor)} (Safe Range: {sensor.LowerBound} to {sensor.UpperBound})");
             }
         }
     }
