@@ -85,10 +85,10 @@ namespace SmartFactoryBackend.Models
                     return new TemperatureSensor(sensor.Id) { Temperature = sensor.NumericValue };
                 case "Humidity Sensor":
                     return new HumiditySensor(sensor.Id) { Humidity = sensor.NumericValue };
-                case "Inventory Sensor":
-                    return new InventorySensor(sensor.Id) { InventoryCount = (int)sensor.NumericValue };
-                case "Door Sensor":
-                    return new DoorSensor(sensor.Id) { IsDoorOpen = sensor.NumericValue > 0 };
+                case "Weight Sensor":
+                    return new WeightSensor(sensor.Id) { Weight = sensor.NumericValue };
+                case "Motion Sensor":
+                    return new MotionSensor(sensor.Id) { IsMotionDetected = sensor.NumericValue > 0 };
                 default:
                     return null;
             }
@@ -102,35 +102,5 @@ namespace SmartFactoryBackend.Models
                 Console.WriteLine($"{sensor.SensorType} Sensor ({sensor.Id}) - Current Value: {sensor.GetSensorValue(sensor)}");
             }
         }
-
-        public void AnalyzeWarehousePerformance()
-        {
-            Console.WriteLine($"--- {RoomName} Performance Analysis ---");
-            foreach (var sensor in Sensors)
-            {
-                if (sensor is TemperatureSensor temperatureSensor)
-                {
-                    Console.WriteLine($"Temperature: {temperatureSensor.Temperature} °C");
-                }
-                else if (sensor is HumiditySensor humiditySensor)
-                {
-                    Console.WriteLine($"Humidity: {humiditySensor.Humidity} %");
-                }
-                else if (sensor is InventorySensor inventorySensor)
-                {
-                    Console.WriteLine($"Inventory Count: {inventorySensor.InventoryCount} items");
-                }
-                else if (sensor is DoorSensor doorSensor)
-                {
-                    Console.WriteLine($"Door Status: {(doorSensor.IsDoorOpen ? "Open" : "Closed")}");
-                }
-            }
-        }
     }
 }
-
-
-
-
-
-
