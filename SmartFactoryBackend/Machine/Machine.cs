@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using SmartFactoryBackend.Sensors;
 
 namespace SmartFactoryBackend.Machines
 {
