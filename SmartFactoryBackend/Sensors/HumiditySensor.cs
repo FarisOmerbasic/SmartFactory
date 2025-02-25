@@ -1,22 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SmartFactoryBackend.Sensors
+﻿namespace SmartFactoryBackend.Sensors
 {
-    class HumiditySensor : Sensor
+    public class HumiditySensor : Sensor
     {
         public double CurrentHumidity { get; set; }
-        public HumiditySensor(string sensorId) : base(sensorId, "Humidity")
-        {
 
-            CurrentHumidity = new Random().Next(30, 61);
-        }
-        public  double GetSensorValue()
+        
+        public HumiditySensor(string sensorId, AlarmTemplate alarmTemplate) : base(sensorId, "Humidity Sensor", alarmTemplate)
         {
-            return CurrentHumidity;
+            CurrentHumidity = new Random().Next(30, 61);  
+        }
+
+        public void ReadData()
+        {
+           
+            CurrentHumidity = new Random().NextDouble() * (60 - 30) + 30;  
+            Console.WriteLine($"{Name} - Humidity: {CurrentHumidity:F2}%");
+
+
+            Console.WriteLine($"Humidity Alert Level: {GetAlertLevel()}");
+        }
+
+
+        public override string GetAlertLevel()
+        {
+            return base.GetAlertLevel(); 
         }
     }
 }

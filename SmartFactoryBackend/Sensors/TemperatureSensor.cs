@@ -1,22 +1,32 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartFactoryBackend.Sensors
 {
-    class TemperatureSensor : Sensor
+    public class TemperatureSensor : Sensor
     {
-        public double CurrentTemperature { get; set; }
-        public TemperatureSensor(string sensorId) : base(sensorId, "Temperature")
-        {
+        public double CurrentTemperature { get; private set; }
 
+        public TemperatureSensor(string sensorId, AlarmTemplate alarmTemplate)
+            : base(sensorId, "Temperature Sensor", alarmTemplate)
+        {
             CurrentTemperature = new Random().Next(18, 27);
         }
-        public  double GetSensorValue()
+
+        public void ReadData()
         {
-            return CurrentTemperature;
+   
+            Random rand = new Random();
+            CurrentTemperature = rand.Next(10, 100);
+
+            Console.WriteLine($"{Name} ({Id}) - Current Temperature: {CurrentTemperature}°C");
+
+            string alertLevel = GetAlertLevel();
+            Console.WriteLine($"ALERT LEVEL: {alertLevel}");
+        }
+
+        public override string GetAlertLevel()
+        {
+            return base.GetAlertLevel(CurrentTemperature);
         }
     }
 }

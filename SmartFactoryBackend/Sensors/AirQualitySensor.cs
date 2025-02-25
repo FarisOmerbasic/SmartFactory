@@ -2,14 +2,14 @@
 
 namespace SmartFactoryBackend.Sensors
 {
-    public class AirQualitySensor : Sensor
+    class AirQualitySensor : Sensor
     {
         public double AirQualityIndex { get; set; }
-        public double AQIThreshold { get; set; } = 300; 
 
-        public AirQualitySensor(string sensorId) : base(sensorId, "Air Quality")
+        public AirQualitySensor(string sensorId, AlarmTemplate alarmTemplate) : base(sensorId, "Air Quality", alarmTemplate)
         {
-            AirQualityIndex = new Random().Next(0, 501); 
+          
+            AirQualityIndex = new Random().Next(0, 501);
         }
 
         public double GetSensorValue()
@@ -17,22 +17,10 @@ namespace SmartFactoryBackend.Sensors
             return AirQualityIndex;
         }
 
-        public void CheckAirQuality()
-        {
-            if (AirQualityIndex > AQIThreshold)
-            {
-                TriggerAirQualityAlert();
-            }
-            else
-            {
-                Console.WriteLine($"Air quality is within safe limits. Current AQI: {AirQualityIndex}");
-            }
-        }
 
-        private void TriggerAirQualityAlert()
+        public override string GetAlertLevel()
         {
-            Console.WriteLine($"ALERT: Air quality is unsafe! Current AQI: {AirQualityIndex} (Threshold: {AQIThreshold})");
-           
+            return base.GetAlertLevel(); 
         }
     }
 }
