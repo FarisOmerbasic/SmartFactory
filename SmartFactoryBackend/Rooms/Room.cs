@@ -22,81 +22,81 @@ namespace SmartFactoryBackend.Models
             Sensors = new List<Sensor>();
         }
 
-        public async Task FetchSensorData()
-        {
-            try
-            {
-                string apiUrl = "https://slb-skyline.on.dataminer.services/api/custom/IndustrySimulator/getAllDevices";
-                string token = GetApiToken();
+        //public async Task FetchSensorData()
+        //{
+        //    try
+        //    {
+        //        string apiUrl = "https://slb-skyline.on.dataminer.services/api/custom/IndustrySimulator/getAllDevices";
+        //        string token = GetApiToken();
 
-                if (string.IsNullOrEmpty(token))
-                {
-                    Console.WriteLine("Error: API token is missing.");
-                    return;
-                }
+        //        if (string.IsNullOrEmpty(token))
+        //        {
+        //            Console.WriteLine("Error: API token is missing.");
+        //            return;
+        //        }
 
-                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
-                response.EnsureSuccessStatusCode();
-                string responseBody = await response.Content.ReadAsStringAsync();
+        //        client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+        //        HttpResponseMessage response = await client.GetAsync(apiUrl);
+        //        response.EnsureSuccessStatusCode();
+        //        string responseBody = await response.Content.ReadAsStringAsync();
 
-                List<Sensor> allSensors = JsonSerializer.Deserialize<List<Sensor>>(responseBody);
-                var roomSensors = allSensors.Where(sensor => sensor.Group1 == RoomName).ToList();
+        //        List<Sensor> allSensors = JsonSerializer.Deserialize<List<Sensor>>(responseBody);
+        //        var roomSensors = allSensors.Where(sensor => sensor.Group1 == RoomName).ToList();
 
-                if (!roomSensors.Any())
-                {
-                    Console.WriteLine($"No sensors found for {RoomName}.");
-                    return;
-                }
+        //        if (!roomSensors.Any())
+        //        {
+        //            Console.WriteLine($"No sensors found for {RoomName}.");
+        //            return;
+        //        }
 
-                foreach (var sensor in roomSensors)
-                {
-                    Sensor specificSensor = CreateSpecificSensor(sensor);
-                    if (specificSensor != null)
-                    {
-                        Sensors.Add(specificSensor);
-                        Console.WriteLine($"Added {sensor.Name} sensor to {RoomName}");
-                    }
-                }
+        //        foreach (var sensor in roomSensors)
+        //        {
+        //            Sensor specificSensor = CreateSpecificSensor(sensor);
+        //            if (specificSensor != null)
+        //            {
+        //                Sensors.Add(specificSensor);
+        //                Console.WriteLine($"Added {sensor.Name} sensor to {RoomName}");
+        //            }
+        //        }
 
-                Console.WriteLine($"Sensor data updated for {RoomName}.");
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error fetching sensor data: {ex.Message}");
-            }
-        }
+        //        Console.WriteLine($"Sensor data updated for {RoomName}.");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Console.WriteLine($"Error fetching sensor data: {ex.Message}");
+        //    }
+        //}
 
         private static string GetApiToken()
         {
             return Env.GetString("TOKEN");
         }
 
-        private Sensor CreateSpecificSensor(Sensor sensor)
-        {
-            switch (sensor.Name)
-            {
-                case "Energy Meter":
-                    return new EnergyMeterSensor(sensor.Id) { EnergyUsage = sensor.NumericValue };
-                case "Production Line Sensor":
-                    return new ProductionLineSensor(sensor.Id) { Throughput = sensor.NumericValue };
-                case "Security Camera":
-                case "Motion Sensor":
-                    return new MotionSensor(sensor.Id) { IsMotionDetected = sensor.NumericValue > 0 };
-                case "Temperature Sensor":
-                    return new TemperatureSensor(sensor.Id) { CurrentTemperature = sensor.NumericValue };
-                case "Humidity Sensor":
-                    return new HumiditySensor(sensor.Id) { CurrentHumidity = sensor.NumericValue };
-                case "Weight Sensor":
-                    return new WeightSensor(sensor.Id) { Weight = sensor.NumericValue };
-                case "Gas Leak Sensor":
-                    return new GasLeakSensor(sensor.Id) { GasConcentration = sensor.NumericValue };
-                case "Air Quality Sensor":
-                    return new AirQualitySensor(sensor.Id) { AirQualityIndex = sensor.NumericValue };
-                default:
-                    return sensor; // Return as is if no specific subclass exists
-            }
-        }
+        //private Sensor CreateSpecificSensor(Sensor sensor)
+        //{
+        //    switch (sensor.Name)
+        //    {
+        //        case "Energy Meter":
+        //            return new EnergyMeterSensor(sensor.Id) { EnergyUsage = sensor.NumericValue };
+        //        case "Production Line Sensor":
+        //            return new ProductionLineSensor(sensor.Id) { Throughput = sensor.NumericValue };
+        //        case "Security Camera":
+        //        case "Motion Sensor":
+        //            return new MotionSensor(sensor.Id) { IsMotionDetected = sensor.NumericValue > 0 };
+        //        case "Temperature Sensor":
+        //            return new TemperatureSensor(sensor.Id) { CurrentTemperature = sensor.NumericValue };
+        //        case "Humidity Sensor":
+        //            return new HumiditySensor(sensor.Id) { CurrentHumidity = sensor.NumericValue };
+        //        case "Weight Sensor":
+        //            return new WeightSensor(sensor.Id) { Weight = sensor.NumericValue };
+        //        case "Gas Leak Sensor":
+        //            return new GasLeakSensor(sensor.Id) { GasConcentration = sensor.NumericValue };
+        //        case "Air Quality Sensor":
+        //            return new AirQualitySensor(sensor.Id) { AirQualityIndex = sensor.NumericValue };
+        //        default:
+        //            return sensor; // Return as is if no specific subclass exists
+        //    }
+        //}
 
         public void DisplaySensorData()
         {

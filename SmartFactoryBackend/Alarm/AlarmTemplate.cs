@@ -26,6 +26,7 @@ namespace SmartFactoryBackend.Sensors
                 return "Warning";
             if (currentValue > NormalThresholdHigh && currentValue <= CriticalHighThreshold)
                 return "Critical High";
-            return "Normal"; 
+            return "Normal";
+        }
     }
 }

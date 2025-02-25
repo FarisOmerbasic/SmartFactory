@@ -11,15 +11,15 @@ namespace SmartFactoryBackend.Models
 {
     public class HttpClientSingleton
     {
-        private static readonly HttpClient _client;
+        //private static readonly HttpClient _client;
 
-        private HttpClientSingleton() { }
-        public static HttpClient GetClient()
-        {
-            if _client != null
-                return _client;
-            else
-                return _client = new HttpClient();
-        }
+        //private HttpClientSingleton() { }
+        //public static HttpClient GetClient()
+        //{
+        //    if _client != null
+        //        return _client;
+        //    else
+        //        return _client = new HttpClient();
+        //}
     }
 }

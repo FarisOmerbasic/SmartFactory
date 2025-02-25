@@ -1,5 +1,6 @@
 
 using DotNetEnv;
+using SmartFactoryWebApi.Services;
 
 namespace SmartFactoryWebApi
 {
@@ -15,6 +16,14 @@ namespace SmartFactoryWebApi
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
+            builder.Services.AddHttpClient("DataMinerApi", client =>
+            {
+                client.BaseAddress = new Uri("https://slb-skyline.on.dataminer.services/api/custom/IndustrySimulator/");
+                client.DefaultRequestHeaders.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", Environment.GetEnvironmentVariable("TOKEN"));
+
+            });
+
+            builder.Services.AddScoped<IDataMinerConnection, DataMinerConnection>();
 
             builder.Services.AddCors(options =>
             {
