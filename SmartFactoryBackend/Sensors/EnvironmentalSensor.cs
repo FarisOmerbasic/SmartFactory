@@ -76,7 +76,7 @@ namespace SmartFactoryBackend.Sensors
         public void LogSensorData()
         {
             Console.WriteLine($"Logging Environmental Sensor Data:");
-            Console.WriteLine($"- Sensor ID: {SensorId}");
+            //Console.WriteLine($"- Sensor ID: {SensorId}");
             Console.WriteLine($"- Temperature: {Temperature} °C");
             Console.WriteLine($"- Humidity: {Humidity} %");
             Console.WriteLine($"- Air Pressure: {AirPressure} hPa");

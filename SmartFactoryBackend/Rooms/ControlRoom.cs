@@ -14,8 +14,6 @@ namespace SmartFactoryBackend.Models
         public string RoomName { get; set; }
         public List<Sensor> Sensors { get; set; }
 
-        private static readonly HttpClient client = new HttpClient();
-
         public ControlRoom(string roomName)
         {
             RoomName = roomName;
@@ -26,7 +24,9 @@ namespace SmartFactoryBackend.Models
         {
             try
             {
-                string apiUrl = "https://slb-skyline.on.dataminer.services/api/custom/IndustrySimulator/getAllDevices";
+                string formattedRoomName = FormatRoomName(RoomName);
+
+                string apiUrl = $"https://slb-skyline.on.dataminer.services/api/custom/IndustrySimulator/getCategory?name={formattedRoomName}";
                 string token = GetApiToken();
 
                 if (string.IsNullOrEmpty(token))
@@ -35,6 +35,8 @@ namespace SmartFactoryBackend.Models
                     return;
                 }
 
+                // Korišćenje Singleton HttpClient-a
+                HttpClient client = HttpClientSingleton.GetClient();
                 client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
 
                 HttpResponseMessage response = await client.GetAsync(apiUrl);
@@ -45,15 +47,13 @@ namespace SmartFactoryBackend.Models
 
                 List<Sensor> allSensors = JsonSerializer.Deserialize<List<Sensor>>(responseBody);
 
-                var roomSensors = allSensors.Where(sensor => sensor.Group1 == RoomName).ToList();
-
-                if (!roomSensors.Any())
+                if (!allSensors.Any())
                 {
                     Console.WriteLine($"No sensors found for {RoomName}.");
                     return;
                 }
 
-                foreach (var sensor in roomSensors)
+                foreach (var sensor in allSensors)
                 {
                     Sensor specificSensor = CreateSpecificSensor(sensor);
                     if (specificSensor != null)
@@ -70,8 +70,6 @@ namespace SmartFactoryBackend.Models
                 Console.WriteLine($"Error fetching sensor data: {ex.Message}");
             }
         }
-
-
 
         private static string GetApiToken()
         {
@@ -118,9 +116,14 @@ namespace SmartFactoryBackend.Models
                 }
                 else if (sensor is MotionSensor motionSensor)
                 {
-                    Console.WriteLine($"Motion Status: {(motionSensor.IsMotionDetected ? "Motion Detected" : "No Motion")}");
+                    Console.WriteLine($"Motion Status: {(motionSensor.IsMotionDetected ? "Motion Detected" : "No Motion")} ");
                 }
             }
+        }
+
+        private static string FormatRoomName(string roomName)
+        {
+            return roomName.Replace("ControlRoom", "Control Room");
         }
     }
 }

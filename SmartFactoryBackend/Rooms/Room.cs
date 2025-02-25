@@ -82,7 +82,7 @@ namespace SmartFactoryBackend.Models
                     return new ProductionLineSensor(sensor.Id) { Throughput = sensor.NumericValue };
                 case "Security Camera":
                 case "Motion Sensor":
-                    return new SecuritySensor(sensor.Id) { IsMotionDetected = sensor.NumericValue > 0 };
+                    return new MotionSensor(sensor.Id) { IsMotionDetected = sensor.NumericValue > 0 };
                 case "Temperature Sensor":
                     return new TemperatureSensor(sensor.Id) { CurrentTemperature = sensor.NumericValue };
                 case "Humidity Sensor":
@@ -119,9 +119,6 @@ namespace SmartFactoryBackend.Models
                         break;
                     case ProductionLineSensor productionSensor:
                         Console.WriteLine($"Production Throughput: {productionSensor.Throughput} units/hr");
-                        break;
-                    case SecuritySensor securitySensor:
-                        Console.WriteLine($"Security Status: {(securitySensor.IsMotionDetected ? "Motion Detected" : "No Motion")}");
                         break;
                     case GasLeakSensor gasSensor when gasSensor.GasConcentration > 5.0:
                         Console.WriteLine($"ALERT: High gas concentration detected ({gasSensor.GasConcentration} ppm)");
