@@ -1,29 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartFactoryBackend.Sensors
 {
     public class PressureSensor : Sensor
     {
-        public double Pressure { get; private set; } // Measured in Bar
+        public double Pressure { get; private set; } 
 
-        public PressureSensor(string id) : base(id, "Pressure Sensor") { }
+        public PressureSensor(string id, AlarmTemplate alarmTemplate) : base(id, "Pressure Sensor", alarmTemplate) { }
 
         public void ReadData()
         {
-            // Simulate pressure reading
+            
             Random rand = new Random();
-            Pressure = rand.NextDouble() * 10 + 5; // 5-15 Bar
+            Pressure = rand.NextDouble() * 10 + 5; 
 
             Console.WriteLine($"{Name} ({Id}) - Pressure: {Pressure:F2} Bar");
 
-            if (Pressure < 6 || Pressure > 14)
-            {
-                Console.WriteLine($"ALERT: Unstable Pressure ({Pressure:F2} Bar)");
-            }
+
+            string alertLevel = GetAlertLevel();
+            Console.WriteLine($"ALERT LEVEL: {alertLevel}");
+        }
+
+        public override string GetAlertLevel()
+        {
+            return base.GetAlertLevel(Pressure);
         }
     }
 }

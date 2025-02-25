@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SmartFactoryBackend.Sensors
+﻿namespace SmartFactoryBackend.Sensors
 {
     public class Sensor
     {
@@ -25,21 +19,30 @@ namespace SmartFactoryBackend.Sensors
         public string SensorType { get; set; }
         public double Latitude { get; set; } = 0.0;
         public double Longitude { get; set; } = 0.0;
+        public AlarmTemplate AlarmTemplate { get; set; }  
 
-
-      
         public Sensor() { }
 
-        public Sensor(string sensorId, string sensorType)
+        public Sensor(string sensorId, string sensorType, AlarmTemplate alarmTemplate)
         {
             Id = sensorId;
-            Name = sensorType; 
+            Name = sensorType;
+            AlarmTemplate = alarmTemplate; 
             IsActive = true;
         }
 
-        public double GetSensorValue(Sensor sensor)
+    
+        public virtual string GetAlertLevel()
         {
-            return sensor.NumericValue;
+            if (NumericValue < AlarmTemplate.CriticalLow)
+                return "Critical Low";
+            else if (NumericValue >= AlarmTemplate.CriticalLow && NumericValue < AlarmTemplate.Normal)
+                return "Normal";
+            else if (NumericValue >= AlarmTemplate.Normal && NumericValue < AlarmTemplate.Warning)
+                return "Warning";
+            else if (NumericValue >= AlarmTemplate.Warning)
+                return "Critical High";
+            return "Normal";  
         }
 
         public void ToggleSensor(bool status)

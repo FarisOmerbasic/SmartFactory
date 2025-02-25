@@ -108,45 +108,21 @@ namespace SmartFactoryBackend.Rooms
             }
         }
 
+
         public void AnalyzeFactoryPerformance()
         {
             Console.WriteLine($"--- {AreaName} Performance Analysis ---");
 
             foreach (var sensor in Sensors)
             {
-                if (sensor is MachineStatusSensor machineSensor)
-                {
-                    Console.WriteLine($"Machine Status: {machineSensor.CurrentState}");
-                }
-                else if (sensor is VibrationSensor vibrationSensor)
-                {
-                    Console.WriteLine($"Vibration Level: {vibrationSensor.CurrentVibration} mm/s");
-                    if (vibrationSensor.CurrentVibration > 8)
-                        Console.WriteLine("High vibration detected!");
-                }
-                else if (sensor is TemperatureSensor tempSensor)
-                {
-                    Console.WriteLine($"Machine Temperature: {tempSensor.CurrentTemperature}°C");
-                    if (tempSensor.CurrentTemperature > 80)
-                        Console.WriteLine("Overheating detected!");
-                }
-                else if (sensor is PressureSensor pressureSensor)
-                {
-                    Console.WriteLine($"Pressure Level: {pressureSensor.Pressure} Bar");
-                    if (pressureSensor.Pressure < 6 || pressureSensor.Pressure > 14)
-                        Console.WriteLine("Pressure instability detected!");
-                }
-                else if (sensor is EnergyMeterSensor energySensor)
-                {
-                    Console.WriteLine($"Energy Usage: {energySensor.EnergyUsage} kWh");
-                }
-                else if (sensor is AirQualitySensor airSensor)
-                {
-                    Console.WriteLine($"Air Quality Index: {airSensor.AirQualityIndex}");
-                    if (airSensor.AirQualityIndex > 150)
-                        Console.WriteLine("Poor air quality detected!");
-                }
+         
+                Console.WriteLine($"{sensor.Name}: {sensor.NumericValue}");
+
+         
+                string alertLevel = sensor.GetAlertLevel();
+                Console.WriteLine($"{sensor.Name} Alert Level: {alertLevel}");
             }
         }
+    }
     }
 }

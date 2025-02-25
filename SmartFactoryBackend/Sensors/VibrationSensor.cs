@@ -1,24 +1,30 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartFactoryBackend.Sensors
 {
-
-    class VibrationSensor : Sensor
+    public class VibrationSensor : Sensor
     {
-        public double CurrentVibration { get; set; }
+        public double CurrentVibration { get; private set; }
 
-        public VibrationSensor(string sensorId) : base(sensorId, "Vibration")
+        public VibrationSensor(string sensorId, AlarmTemplate alarmTemplate)
+            : base(sensorId, "Vibration Sensor", alarmTemplate)
         {
             CurrentVibration = new Random().NextDouble() * (10 - 0.1) + 0.1;
         }
 
-        public double GetSensorValue()
+        public void ReadData()
         {
-            return CurrentVibration;
+            CurrentVibration = new Random().NextDouble() * (10 - 0.1) + 0.1;
+
+            Console.WriteLine($"{Name} ({Id}) - Vibration Level: {CurrentVibration:F2}");
+
+            string alertLevel = GetAlertLevel();
+            Console.WriteLine($"ALERT LEVEL: {alertLevel}");
+        }
+
+        public override string GetAlertLevel()
+        {
+            return base.GetAlertLevel(CurrentVibration);
         }
     }
 }

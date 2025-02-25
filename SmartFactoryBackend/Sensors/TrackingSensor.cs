@@ -1,18 +1,30 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SmartFactoryBackend.Sensors
 {
     public class TrackingSensor : Sensor
     {
-        public bool IsItemScanned { get; set; }
+        public bool IsItemScanned { get; private set; }
 
-        public TrackingSensor(string sensorId) : base(sensorId, "Tracking Sensor")
+        public TrackingSensor(string sensorId, AlarmTemplate alarmTemplate)
+            : base(sensorId, "Tracking Sensor", alarmTemplate)
         {
             IsItemScanned = false;
+        }
+
+        public void ScanItem()
+        {
+            IsItemScanned = new Random().Next(0, 2) == 1;
+
+            Console.WriteLine($"{Name} ({Id}) - Item Scanned: {IsItemScanned}");
+
+            string alertLevel = GetAlertLevel();
+            Console.WriteLine($"ALERT LEVEL: {alertLevel}");
+        }
+
+        public override string GetAlertLevel()
+        {
+            return base.GetAlertLevel(IsItemScanned ? 1 : 0);
         }
     }
 }
