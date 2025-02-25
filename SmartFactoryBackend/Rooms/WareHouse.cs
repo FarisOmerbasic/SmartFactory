@@ -82,9 +82,9 @@ namespace SmartFactoryBackend.Models
             switch (sensor.Name)
             {
                 case "Temperature Sensor":
-                    return new TemperatureSensor(sensor.Id) { Temperature = sensor.NumericValue };
+                    return new TemperatureSensor(sensor.Id) { CurrentTemperature = sensor.NumericValue };
                 case "Humidity Sensor":
-                    return new HumiditySensor(sensor.Id) { Humidity = sensor.NumericValue };
+                    return new HumiditySensor(sensor.Id) { CurrentHumidity = sensor.NumericValue };
                 case "Weight Sensor":
                     return new WeightSensor(sensor.Id) { Weight = sensor.NumericValue };
                 case "Motion Sensor":
