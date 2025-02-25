@@ -4,9 +4,12 @@ namespace SmartFactoryBackend.Sensors
     {
         public bool IsMotionDetected { get; set; }
 
-        public MotionSensor(string id) : base(id, "Motion Sensor") { }
+        public MotionSensor(string id) : base(id, "Motion Sensor")
+        {
+            IsMotionDetected = new Random().Next(0, 2) == 1; 
+        }
 
-        public override string GetSensorValue(Sensor sensor)
+        public override string GetSensorValue()
         {
             return IsMotionDetected ? "Motion Detected" : "No Motion";
         }
