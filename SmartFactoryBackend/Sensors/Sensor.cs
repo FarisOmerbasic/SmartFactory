@@ -23,6 +23,9 @@ namespace SmartFactoryBackend.Sensors
         public bool IsActive { get; set; }
         public int UpdateInterval { get; set; }
         public string SensorType { get; set; }
+        public double Latitude { get; set; } = 0.0;
+        public double Longitude { get; set; } = 0.0;
+
 
         // Prazan konstruktor potreban za deserialization
         public Sensor() { }
