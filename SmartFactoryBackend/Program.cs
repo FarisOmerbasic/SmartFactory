@@ -7,7 +7,8 @@ public class Program
 {
     static async Task Main()
     {
-        Env.Load("C:\\Users\\Lenovo\\source\\repos\\FarisOmerbasic\\SmartFactory\\env");
+
+        Env.Load("C:\\Users\\Emin Brankovic\\Desktop\\Coding Battle\\SmartFactory\\SmartFactoryBackend\\.env");
 
 
         var stringNeki = Env.GetString("TOKEN");
