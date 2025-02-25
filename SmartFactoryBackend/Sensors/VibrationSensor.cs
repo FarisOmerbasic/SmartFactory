@@ -22,9 +22,9 @@ namespace SmartFactoryBackend.Sensors
             Console.WriteLine($"ALERT LEVEL: {alertLevel}");
         }
 
-        public override string GetAlertLevel()
-        {
-            return base.GetAlertLevel(CurrentVibration);
-        }
+        //public override string GetAlertLevel()
+        //{
+        //    return base.GetAlertLevel(CurrentVibration);
+        //}
     }
 }
