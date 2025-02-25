@@ -88,7 +88,7 @@ namespace SmartFactoryBackend.Models
                     return new ProductionLineSensor(sensor.Id) { Throughput = sensor.NumericValue };
                 case "Security Camera":
                 case "Motion Sensor":
-                    return new SecuritySensor(sensor.Id) { IsMotionDetected = sensor.NumericValue > 0 };
+                    return new MotionSensor(sensor.Id) { IsMotionDetected = sensor.NumericValue > 0 };
                 default:
                     return null;
             }
@@ -116,9 +116,9 @@ namespace SmartFactoryBackend.Models
                 {
                     Console.WriteLine($"Production Throughput: {productionSensor.Throughput} units/hr");
                 }
-                else if (sensor is SecuritySensor securitySensor)
+                else if (sensor is MotionSensor motionSensor)
                 {
-                    Console.WriteLine($"Security Status: {(securitySensor.IsMotionDetected ? "Motion Detected" : "No Motion")}");
+                    Console.WriteLine($"Motion Status: {(motionSensor.IsMotionDetected ? "Motion Detected" : "No Motion")}");
                 }
             }
         }
