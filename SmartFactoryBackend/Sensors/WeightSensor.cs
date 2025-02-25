@@ -11,9 +11,9 @@ namespace SmartFactoryBackend.Sensors
             Weight = new Random().NextDouble() * 100; 
         }
 
-        public override string GetSensorValue()
+        public double GetSensorValue()
         {
-            return $"{Weight} kg";
+            return Weight;
         }
     }
 }

@@ -9,9 +9,9 @@ namespace SmartFactoryBackend.Sensors
             IsMotionDetected = new Random().Next(0, 2) == 1; 
         }
 
-        public override string GetSensorValue()
+        public bool GetSensorValue()
         {
-            return IsMotionDetected ? "Motion Detected" : "No Motion";
+            return IsMotionDetected;
         }
     }
 }
