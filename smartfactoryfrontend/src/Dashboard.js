@@ -1,37 +1,13 @@
 import React from "react";
+import Menu from "./menu";
 import "./Dashboard.css";
 
 const Dashboard = () => {
     return (
         <div className="dashboard-container">
-            {/* Sidebar */}
-            <aside className="sidebar">
-                <h2>SmartFactory</h2>
-                <nav>
-                    <h3>Dashboard</h3>
-                    <ul>
-                        <li>Users</li>
-                        <li>Analytics</li>
-                        <li>Settings</li>
-                    </ul>
-                    <h3>Production</h3>
-                    <ul>
-                        <li>Machines</li>
-                        <li>Energy</li>
-                        <li>Maintenance</li>
-                    </ul>
-                </nav>
-                <div className="admin-info">
-                    <p>Admin User</p>
-                    <span>System Administrator</span>
-                </div>
-            </aside>
-
-            {/* Main content */}
+            <Menu />
             <main className="main-content">
                 <h1>Overview</h1>
-
-                {/* Cards Section */}
                 <div className="cards">
                     <div className="card">
                         <p>Production Rate</p>
@@ -54,8 +30,6 @@ const Dashboard = () => {
                         <small>Next in 2 days</small>
                     </div>
                 </div>
-
-                {/* Recent Activities */}
                 <h2>Recent Activities</h2>
                 <ul className="recent-activities">
                     <li>
@@ -71,8 +45,6 @@ const Dashboard = () => {
                         <p>Sarah Chen - Production Manager</p>
                     </li>
                 </ul>
-
-                {/* System Health */}
                 <h2>System Health</h2>
                 <table className="system-health">
                     <thead>
