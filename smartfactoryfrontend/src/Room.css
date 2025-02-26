@@ -1,0 +1,156 @@
+  /* Sidebar */
+  .sidebar {
+    width: 250px;
+    background: #f4f2ff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+    .sidebar h2 {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .sidebar h3 {
+        font-size: 16px;
+        margin-top: 20px;
+    }
+
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .sidebar li {
+        font-size: 14px;
+        margin: 8px 0;
+        cursor: pointer;
+    }
+
+    .sidebar .admin-info {
+        margin-top: auto;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+        .sidebar .admin-info span {
+            font-size: 12px;
+            display: block;
+            color: gray;
+        }
+
+.room-container {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    color: #333;
+  }
+  
+  .breadcrumb {
+    font-size: 14px;
+    color: #777;
+    margin-bottom: 20px;
+  }
+  
+  h1 {
+    font-size: 28px;
+    margin-bottom: 20px;
+  }
+  
+  /* Sensor Overview */
+  .sensor-overview {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+  }
+  
+  .sensor-card {
+    flex: 1;
+    padding: 15px;
+    border-radius: 8px;
+    background: #f6f6f9;
+    text-align: center;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+  }
+  
+  .sensor-card h3 {
+    font-size: 16px;
+    color: #777;
+  }
+  
+  .sensor-card h2 {
+    font-size: 20px;
+    margin: 5px 0;
+  }
+  
+  .sensor-card p {
+    font-size: 14px;
+    color: #555;
+  }
+  
+  /* Sensors Table */
+  .sensor-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 30px;
+  }
+  
+  .sensor-table th, .sensor-table td {
+    padding: 12px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .sensor-table th {
+    text-align: left;
+    background: #f4f4f4;
+  }
+  
+  /* Machines List */
+  .machines-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+  }
+  
+  .machine-card {
+    background: #f6f6f9;
+    padding: 12px;
+    border-radius: 5px;
+    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  
+  .machine-card h3 {
+    margin: 0;
+    font-size: 16px;
+  }
+  
+  .machine-card p {
+    font-size: 14px;
+    color: #777;
+  }
+  
+  /* Buttons */
+  .button-container {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .add-sensor, .add-machine {
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .add-sensor {
+    background: #6a5acd;
+    color: white;
+  }
+  
+  .add-machine {
+    background: #8a7fd1;
+    color: white;
+  }
