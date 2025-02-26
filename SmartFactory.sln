@@ -5,8 +5,6 @@ VisualStudioVersion = 17.13.35818.85
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SmartFactoryBackend", "SmartFactoryBackend\SmartFactoryBackend.csproj", "{25CADA03-5552-4D34-9937-B69053747C8A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Frontend", "Frontend\Frontend.csproj", "{2B0A625F-C778-47BF-B507-4A66B95E4938}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SmartFactoryWebApi", "SmartFactoryWebApi\SmartFactoryWebApi.csproj", "{3AABCEC7-F22F-4B58-881D-124A5992FAA7}"
 EndProject
 Global
