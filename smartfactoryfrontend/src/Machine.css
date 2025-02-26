@@ -1,0 +1,106 @@
+.machine-page {
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+  /* Sidebar */
+.sidebar {
+    width: 250px;
+    background: #f4f2ff;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+    .sidebar h2 {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    .sidebar h3 {
+        font-size: 16px;
+        margin-top: 20px;
+    }
+
+    .sidebar ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .sidebar li {
+        font-size: 14px;
+        margin: 8px 0;
+        cursor: pointer;
+    }
+
+    .sidebar .admin-info {
+        margin-top: auto;
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+        .sidebar .admin-info span {
+            font-size: 12px;
+            display: block;
+            color: gray;
+        }
+
+  
+  .title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  .status-cards {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .card {
+    background: #f4f4f4;
+    padding: 16px;
+    border-radius: 8px;
+    text-align: center;
+    flex: 1;
+  }
+  
+  .icon {
+    margin-bottom: 8px;
+  }
+  
+  .green { color: green; }
+  .yellow { color: orange; }
+  .red { color: red; }
+  .gray { color: gray; }
+  
+  .subtitle {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 20px;
+    margin-bottom: 12px;
+  }
+  
+  .alerts {
+    background: #ffe5e5;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 24px;
+  }
+  
+  .machine-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .machine-table th, .machine-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .machine-table th {
+    background: #f0f0f0;
+  }
+  

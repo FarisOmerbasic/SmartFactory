@@ -1,0 +1,91 @@
+.energy-page {
+    display: flex;
+    font-family: Arial, sans-serif;
+  }
+  
+  .sidebar {
+    width: 250px;
+    background: #f8f9fa;
+    padding: 20px;
+    min-height: 100vh;
+  }
+  
+  .sidebar h2 {
+    font-size: 22px;
+    margin-bottom: 20px;
+  }
+  
+  .sidebar ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .sidebar ul li {
+    padding: 10px;
+    cursor: pointer;
+  }
+  
+  .sidebar ul .active {
+    font-weight: bold;
+    color: #6c63ff;
+  }
+  
+  .user-info {
+    margin-top: 50px;
+    font-size: 14px;
+    color: #666;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    padding: 20px;
+  }
+  
+  .status-cards {
+    display: flex;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  
+  .card {
+    background: #f4f4f4;
+    padding: 16px;
+    border-radius: 8px;
+    text-align: center;
+    flex: 1;
+  }
+  
+  .energy-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+  }
+  
+  .energy-table th, .energy-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+  }
+  
+  .energy-table th {
+    background: #f0f0f0;
+  }
+  
+  .increase { color: green; }
+  .decrease { color: red; }
+  
+  .suggestions {
+    margin-top: 20px;
+  }
+  
+  .suggestion {
+    background: #eef;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+  }
+  
+  .suggestion.warning {
+    background: #ffe5e5;
+  }
+  
