@@ -28,16 +28,22 @@ namespace SmartFactoryWebApi.Controllers
             if (devices == null || devices.Count == 0)
                 return BadRequest("No devices found to calculate power consumption.");
 
-            var totalPower = EnergyCalculationService.CalculateTotalPower(devices);
+            var energyDevices=devices.Where(d=>d.Group2 == "Energy Meter Sensor").ToList();
+
+
+            var totalPower = EnergyCalculationService.CalculateTotalPower(energyDevices);
             var cost = EnergyCalculationService.CalculateCost(totalPower);
             var suggestions = EnergyCalculationService.GenerateOptimizationSuggestions(devices);
+
+            var effRate=new Random().Next(80, 100);
 
             // Returning DTO with calculated power data
             var energyDto = new EnergyDto
             {
                 TotalPower = totalPower,
                 TotalCost = cost,
-                OptimizationSuggestions = suggestions
+                OptimizationSuggestions = suggestions,
+                EfficiencyRate= effRate
             };
 
             return Ok(energyDto);

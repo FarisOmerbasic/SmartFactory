@@ -50,6 +50,7 @@ namespace SmartFactoryWebApi
 
             app.UseCors("AllowEverything");
 
+
             app.UseAuthorization();
 
 
