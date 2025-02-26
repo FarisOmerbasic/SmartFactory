@@ -1,6 +1,6 @@
 ﻿namespace SmartFactoryWebApi.Models
 {
-    public class OptimizationSuggestion
+    public class OptimizationSuggestions
     {
         public string Suggestion { get; set; } 
         public string Priority { get; set; }
