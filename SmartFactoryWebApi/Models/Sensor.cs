@@ -16,6 +16,7 @@ namespace SmartFactoryBackend.Models
         public string Group3 { get; set; }
         public bool IsActive { get; set; }
         public int UpdateInterval { get; set; }
-     
+
 
     }
+}
