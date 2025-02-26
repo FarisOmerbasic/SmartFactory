@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using SmartFactoryBackend.Models;
 
 namespace SmartFactoryWebApi.Services
 {

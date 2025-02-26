@@ -6,7 +6,7 @@ namespace SmartFactoryWebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CategorieController(IDataMinerConnection dataMinerConnection) : ControllerBase
+    public class CategoryController(IDataMinerConnection dataMinerConnection) : ControllerBase
     {
         [HttpGet("GetAllCategories")]
         public async Task<ActionResult<string?>> GetAllCategories()

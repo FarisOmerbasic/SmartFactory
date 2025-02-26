@@ -13,12 +13,10 @@ namespace SmartFactoryWebApi.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
-        private readonly IDataMinerConnection _dataMinerConnection;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger, IDataMinerConnection dataMinerConnection)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger)
         {
             _logger = logger;
-            _dataMinerConnection = dataMinerConnection;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
@@ -32,33 +30,5 @@ namespace SmartFactoryWebApi.Controllers
             })
             .ToArray();
         }
-
-
-        [HttpGet("GetAllCategories")]
-        public async Task<ActionResult<string?>> GetAllCategories()
-        {
-            var result = await _dataMinerConnection.GetAllCategories();
-
-
-            return result;
-        }
-
-        [HttpGet("GetDeviceByName")]
-        public async Task<ActionResult<string?>> GetDeviceByName([FromQuery]string deviceName)
-        {
-            var result = await _dataMinerConnection.GetDeviceByName(deviceName);
-
-            return result;
-        }
-
-        [HttpGet("GetDeviceByCategoryName")]
-        public async Task<ActionResult<string?>> GetDeviceByCategoryName([FromQuery] string categoryName)
-        {
-            var result = await _dataMinerConnection.GetDeviceByCategoryName(categoryName);
-
-            return result;
-        }
-
-
     }
 }
