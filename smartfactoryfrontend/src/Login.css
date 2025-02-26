@@ -1,75 +1,157 @@
+/* Import Google Font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@400;600&display=swap');
+
+/* Root Variables */
+:root {
+  --primary-bg: #F0F4F8;
+  --sidebar-bg: #DCE6F1;
+  --accent-color: #3A86FF;
+  --text-color: #1D3557;
+  --success-color: #2ECC71;
+  --warning-color: #FF6B6B;
+  --info-color: #6AB7FF;
+}
+
+/* Background Styling */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f9fc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-  }
-  
-  .login-container {
-    text-align: center;
-  }
-  
-  .title {
-    font-size: 24px;
-    font-weight: bold;
-    margin-bottom: 20px;
-  }
-  
+  background: url("./assets/loginImgs/background.png") no-repeat center center/cover;
+  background-size: cover; /* Ensures the image scales properly */
+  background-attachment: fixed; 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  font-family: "Poppins", sans-serif;
+  color: var(--text-color);
+}
+
+/* Login Container */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+/* Title with cursive */
+.title {
+  font-size: 28px;
+  font-weight: 600;
+  font-family: "Dancing Script", cursive;
+  color: var(--accent-color);
+  margin-bottom: 20px;
+  letter-spacing: 1px;
+}
+
+/* Login Box */
+.login-box {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 40px;
+  border-radius: 12px;
+  box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.15);
+  width: 380px;
+  transition: 0.3s ease-in-out;
+}
+
+.login-box:hover {
+  transform: translateY(-5px);
+}
+
+/* Welcome Message with emoji */
+.welcome {
+  font-size: 24px;
+  font-weight: 600;
+  color: var(--text-color);
+  margin-bottom: 10px;
+}
+
+.welcome::after {
+  content: " 🚀"; /* Adds an emoji */
+}
+
+/* Subtitle with italics */
+.subtitle {
+  font-size: 16px;
+  font-style: italic;
+  font-weight: 400;
+  color: gray;
+  margin-bottom: 20px;
+}
+
+/* Input Fields */
+.input-group {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  margin-bottom: 18px;
+}
+
+.input-group label {
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 6px;
+  color: var(--text-color);
+}
+
+/* Input Fields with Placeholder Styling */
+.input-group input {
+  padding: 14px;
+  border: 2px solid var(--sidebar-bg);
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: 400;
+  font-style: italic;
+  transition: 0.3s ease-in-out;
+}
+
+.input-group input::placeholder {
+  font-style: italic;
+  color: #888;
+}
+
+.input-group input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 8px rgba(58, 134, 255, 0.5);
+}
+
+/* Buttons */
+.login-btn, .admin-btn {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 8px;
+  font-size: 17px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  margin-top: 10px;
+}
+
+.login-btn {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.login-btn:hover {
+  background-color: darkblue;
+  transform: scale(1.05);
+}
+
+.admin-btn {
+  background-color: var(--accent-color);
+  color: white;
+}
+
+.admin-btn:hover {
+  background-color: darkblue;
+  transform: scale(1.05);
+}
+
+/* Responsive Design */
+@media (max-width: 400px) {
   .login-box {
-    background: #f5f5ff;
-    padding: 30px;
-    border-radius: 10px;
-    width: 320px;
-    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    width: 90%;
   }
-  
-  
-  .welcome {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  .subtitle {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 15px;
-  }
-  
-  .input-group {
-    text-align: left;
-    margin-bottom: 15px;
-  }
-  
-  .input-group label {
-    display: block;
-    font-size: 14px;
-    margin-bottom: 5px;
-  }
-  
-  .input-group input {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-  }
-  
-  .login-btn {
-    width: 100%;
-    padding: 10px;
-    background-color: #6c48ff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    font-size: 16px;
-    cursor: pointer;
-    margin-top: 10px;
-  }
-  
-  .login-btn:hover {
-    background-color: #5a3dcf;
-  }
-  
+}

@@ -1,0 +1,114 @@
+/* Root Variables for Color Palette */
+:root {
+    --primary-bg: #F0F4F8; /* Light Gray-Blue */
+    --sidebar-bg: #DCE6F1; /* Soft Sky Blue */
+    --accent-color: #3A86FF; /* Bright Blue */
+    --text-color: #1D3557; /* Dark Navy */
+    --success-color: #2ECC71; /* Green */
+    --warning-color: #FF6B6B; /* Red */
+    --info-color: #6AB7FF; /* Sky Blue */
+}
+
+/* Menu Layout */
+.menu {
+    width: 250px;
+    background: var(--sidebar-bg);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: var(--text-color);
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    height: 100vh;
+}
+
+.menu h2 {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 10px;
+    color: var(--accent-color);
+}
+
+/* Logo */
+.logo-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo {
+    width: 200px;
+    height: 200px;
+}
+
+/* Menu Items */
+.menu h3 {
+    font-size: 16px;
+    margin-top: 20px;
+    color: var(--accent-color);
+}
+
+.menu ul {
+    list-style: none;
+    padding: 0;
+}
+
+.menu li {
+    font-size: 14px;
+    margin: 8px 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-radius: 5px;
+    transition: 0.3s;
+}
+
+.menu li:hover {
+    background: var(--accent-color);
+    color: white;
+}
+
+/* Icons in Menu */
+.menu-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+}
+
+/* Admin Info */
+.admin-info {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    background: var(--sidebar-bg);
+    border-radius: 10px;
+    margin-top: 20px;
+    text-align: center;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Admin Avatar */
+.admin-avatar {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    border: 3px solid var(--accent-color);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Admin Text */
+.admin-info p {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--text-color);
+    margin: 5px 0 2px 0;
+}
+
+.admin-info span {
+    font-size: 12px;
+    color: gray;
+}
