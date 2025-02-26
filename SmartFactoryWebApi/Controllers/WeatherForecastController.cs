@@ -1,4 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using SmartFactoryWebApi.Models;
 using SmartFactoryWebApi.Services;
 
 namespace SmartFactoryWebApi.Controllers
@@ -30,5 +32,46 @@ namespace SmartFactoryWebApi.Controllers
             })
             .ToArray();
         }
+
+
+        [HttpGet("TestJson")]
+        public ActionResult<List<JsonTestResponse>> Test()
+        {
+            string jsonFilePath = "C:\\Users\\Emin Brankovic\\Desktop\\Coding Battle\\SmartFactory\\SmartFactoryWebApi\\threshold.json";
+            JsonFileHandler jsonHandler = new JsonFileHandler(jsonFilePath);
+            JObject jsonData;
+
+            try
+            {
+                jsonData= jsonHandler.ReadJson();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+
+
+
+            JArray thresholdsArray = (JArray)jsonData["Thresholds"];
+
+            List<JsonTestResponse> thresholds = thresholdsArray.ToObject<List<JsonTestResponse>>();
+
+            return Ok(thresholds);
+
+        }
+    }
+
+    public class JsonTestResponse
+    {
+        public string Id { get; set; }
+        public string Name { get; set; }
+        public double LowerBound { get; set; }
+        public double UpperBound { get; set; }
+        public double CriticalLowThreshold { get; set; }
+        public double NormalLowThreshold { get; set; }
+        public double NormalHighThreshold { get; set; }
+        public double CriticalHighThreshold { get; set; }
+        public double WarningLowThreshold { get; set; }
+        public double WarningHighThreshold { get; set;}
     }
 }
