@@ -32,6 +32,7 @@ namespace SmartFactoryWebApi.Controllers
 
 
             var totalPower = EnergyCalculationService.CalculateTotalPower(energyDevices);
+            totalPower = totalPower / 1000;
             var cost = EnergyCalculationService.CalculateCost(totalPower);
             var suggestions = EnergyCalculationService.GenerateOptimizationSuggestions(devices);
 
