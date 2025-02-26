@@ -11,7 +11,7 @@ namespace SmartFactoryWebApi.Controllers
     public class UserController : ControllerBase
     {
         [HttpPost("login")]
-        public ActionResult<User> Login([FromBody] UserLoginDto request)
+        public ActionResult<UserDto> Login([FromBody] UserLoginDto request)
         {
             var user = UserRepository.GetUserByEmail(request.Email);
 
@@ -19,7 +19,16 @@ namespace SmartFactoryWebApi.Controllers
 
             if (user.Password != request.Password) return BadRequest("Invalid credentials");
 
-            return Ok(user);
+            var resoponse = new UserDto
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                Email = user.Email,
+                Role = user.Role,
+            };
+
+            return Ok(resoponse);
         }
     }
 

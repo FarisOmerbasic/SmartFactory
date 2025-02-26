@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using SmartFactoryWebApi.Models;
 using SmartFactoryWebApi.Services;
 
 namespace SmartFactoryWebApi.Controllers
@@ -9,21 +10,14 @@ namespace SmartFactoryWebApi.Controllers
     public class CategoryController(IDataMinerConnection dataMinerConnection) : ControllerBase
     {
         [HttpGet("GetAllCategories")]
-        public async Task<ActionResult<string?>> GetAllCategories()
+        public async Task<ActionResult<List<Category>>?> GetAllCategories(CancellationToken cancellationToken)
         {
-            var result = await dataMinerConnection.GetAllCategories();
+            var result = await dataMinerConnection.GetAllCategories(cancellationToken);
 
+            if(result == null) return BadRequest();
+            if(result.Count <= 0) return BadRequest();
 
             return result;
         }
-
-        [HttpGet("GetDeviceByCategoryName")]
-        public async Task<ActionResult<string?>> GetDeviceByCategoryName([FromQuery] string categoryName)
-        {
-            var result = await dataMinerConnection.GetDeviceByCategoryName(categoryName);
-
-            return result;
-        }
-
     }
 }
