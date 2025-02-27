@@ -33,21 +33,31 @@ namespace SmartFactoryWebApi
             return JObject.Parse(json);
         }
 
-        public void UpdateJson(string key, string newValue)
+        public int UpdateJson(string id,string keyUpper, double newValueUpper, string keyLower, double newValueLower)
         {
             JObject jsonObj = ReadJson();
 
-            if (jsonObj.ContainsKey(key))
-            {
-                jsonObj[key] = newValue;
+            JArray thresholds = (JArray)jsonObj["Thresholds"];
 
+            if (thresholds == null)
+            {
+                return 1;
+            }
+
+            var thresholdObject = thresholds.FirstOrDefault(obj => (string)obj["id"] == id);
+
+
+            if (thresholdObject != null)
+            {
+                thresholdObject[keyUpper]=newValueUpper;
+                thresholdObject[keyLower]=newValueLower;
                 File.WriteAllText(_filePath, jsonObj.ToString(Formatting.Indented));
-                Console.WriteLine($"Updated '{key}' in JSON file.");
+
+                return 0;
             }
             else
-            {
-                Console.WriteLine($"Key '{key}' not found in JSON.");
-            }
+                return 1;
+
         }
 
     }
