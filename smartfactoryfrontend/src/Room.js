@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
+import { LineChart, Line, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import Menu from "./menu";
 import "./Room.css";
 const Room = () => {
   const [sensors, setSensors] = useState([]);
   const [rooms, setRooms] = useState([]);
   const [currentRoomIndex, setCurrentRoomIndex] = useState(0);
-  const [showModal, setShowModal] = useState(false);
   const [selectedSensor, setSelectedSensor] = useState(null);
+  const [chartData, setChartData] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [modalType, setModalType] = useState("");
   const [thresholds, setThresholds] = useState({
     warningUpper: "",
     warningLower: "",
@@ -27,6 +30,24 @@ const Room = () => {
       console.error("Error fetching data:", error);
     }
   };
+
+  const fetchDeviceTrending = async (deviceId) => {
+    try {
+      const response = await fetch(`http://localhost:5270/api/Trending/GetDeviceTrendingAverage/${deviceId}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch trending data");
+      }
+      const data = await response.json();
+      const formattedData = data.map(item => ({
+        time: new Date(item.time).toLocaleTimeString(),
+        averageValue: item.averageValue
+      }));
+      setChartData(formattedData);
+    } catch (error) {
+      console.error("Error fetching trending data:", error);
+    }
+  };
+
   const fetchCategories = async () => {
     try {
       const response = await fetch("http://localhost:5270/api/Category/GetAllCategories");
@@ -47,6 +68,13 @@ const Room = () => {
       fetchSensors(rooms[currentRoomIndex]);
     }
   }, [currentRoomIndex, rooms]);
+
+  useEffect(() => {
+    if (selectedSensor) {
+      fetchDeviceTrending(selectedSensor.id);
+    }
+  }, [selectedSensor]);
+
   const nextRoom = () => {
     setCurrentRoomIndex((prevIndex) => (prevIndex + 1) % rooms.length);
   };
@@ -55,6 +83,7 @@ const Room = () => {
   };
   const openThresholdModal = (sensor) => {
     setSelectedSensor(sensor);
+    setModalType("threshold");
     setShowModal(true);
   };
   const handleThresholdChange = (e) => {
@@ -78,6 +107,15 @@ const Room = () => {
       console.error("Error updating threshold:", error);
     }
   };
+
+
+  const openChartModal = (sensor) => {
+    setSelectedSensor(sensor);
+    fetchDeviceTrending(sensor.id);
+    setModalType("chart"); // Fetch data for the selected sensor
+    setShowModal(true); // Show modal with chart
+  };
+
   return (
     <div className="dashboard-container">
       <Menu />
@@ -104,31 +142,58 @@ const Room = () => {
                   <td>{new Date().toLocaleTimeString()}</td>
                   <td>
                     <button className="threshold-button" onClick={() => openThresholdModal(sensor)}>Set Threshold</button>
+                    <button className="chart-button" onClick={() => openChartModal(sensor)}>Show Trending</button> {/* Button to open the graph */}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+
           <div className="button-container">
             <button className="room-navigation prev-room" onClick={prevRoom}>Previous Room</button>
             <button className="room-navigation next-room" onClick={nextRoom}>Next Room</button>
           </div>
         </div>
       </main>
-      {showModal && (
-        <div className="modal">
-          <div className="modal-content">
-            <h2>Set Threshold for {selectedSensor?.name}</h2>
-            <label>Warning Upper: <input type="number" name="warningUpper" onChange={handleThresholdChange} /></label>
-            <label>Warning Lower: <input type="number" name="warningLower" onChange={handleThresholdChange} /></label>
-            <label>Critical Upper: <input type="number" name="criticalUpper" onChange={handleThresholdChange} /></label>
-            <label>Critical Lower: <input type="number" name="criticalLower" onChange={handleThresholdChange} /></label>
-            <label>Normal Upper: <input type="number" name="normalUpper" onChange={handleThresholdChange} /></label>
-            <label>Normal Lower: <input type="number" name="normalLower" onChange={handleThresholdChange} /></label>
-            <button className="room-navigation prev-room" onClick={saveThreshold}>Save</button>
-            <button className="room-navigation next-room" onClick={() => setShowModal(false)}>Close</button>
+      {showModal && selectedSensor && (
+  <div className="modal-room">
+    <div className="modal-content-room">
+      <h2>{selectedSensor.name}</h2>
+      
+      {/* Conditional rendering based on modalType */}
+      {modalType === "chart" && chartData.length > 0 && (
+        <div>
+          <h3>Trending Data</h3>
+          <ResponsiveContainer width="100%" height={400}>
+            <LineChart data={chartData}>
+              <XAxis dataKey="time" />
+              <YAxis />
+              <Tooltip />
+              <Line type="monotone" dataKey="averageValue" stroke="#8884d8" />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      )}
+
+      {modalType === "threshold" && (
+        <div>
+          <h3>Set Threshold for {selectedSensor?.name}</h3>
+          <div className="threshold-form">
+          <label>Normal Lower: <input type="number" name="normalLowThreshold" onChange={handleThresholdChange} /></label>
+            <label>Normal Upper: <input type="number" name="normalHighThreshold" onChange={handleThresholdChange} /></label>
+            <label>Warning Lower: <input type="number" name="warningLowThreshold" onChange={handleThresholdChange} /></label>
+            <label>Warning Upper: <input type="number" name="warningHighThreshold" onChange={handleThresholdChange} /></label>
+            <label>Critical Lower: <input type="number" name="criticalLowThreshold" onChange={handleThresholdChange} /></label>
+            <label>Critical Upper: <input type="number" name="criticalHighThreshold" onChange={handleThresholdChange} /></label>
+            <button className="confirm-btn" onClick={saveThreshold}>Save</button>
           </div>
         </div>
+      )}
+
+      <button className="cancel-btn" onClick={() => setShowModal(false)}>Close</button>
+    </div>
+  </div>
+
       )}
     </div>
   );
