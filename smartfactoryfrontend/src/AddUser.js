@@ -15,18 +15,58 @@ const AddUser = () => {
         setUserData({ ...userData, [e.target.name]: e.target.value });
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("User Data Submitted:", userData);
-        alert("✅ User added successfully!");
-        setUserData({
-            firstName: "",
-            lastName: "",
-            email: "",
-            password: "",
-            role: "",
-        });
+    
+        const roleMapping = {
+            SuperUser: 1,
+            FactoryManager: 2,
+            Maintenance: 3,
+            Supervisors: 4,
+            Administrator: 5,
+            Operations: 6,
+            User: 7
+        };
+    
+        const payload = {
+            id: 0,
+            firstName: userData.firstName,
+            lastName: userData.lastName,
+            email: userData.email,
+            password: userData.password,
+            role: roleMapping[userData.role] || 0
+        };
+    
+        try {
+            const response = await fetch("http://localhost:5270/api/User/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(payload),
+            });
+    
+            const text = await response.text(); // Uzimamo odgovor kao običan tekst
+            console.log("Server Response:", text);
+    
+            if (response.ok) {
+                alert("✅ " + text); // Prikazujemo poruku iz API-ja
+                setUserData({
+                    firstName: "",
+                    lastName: "",
+                    email: "",
+                    password: "",
+                    role: "",
+                });
+            } else {
+                alert("❌ Error adding user: " + text);
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("❌ Failed to send request. Check console for details.");
+        }
     };
+    
 
     return (
         <div className="add-user-container">
