@@ -1,0 +1,94 @@
+:root {
+    --primary-bg: #F0F4F8;
+    --sidebar-bg: #DCE6F1;
+    --accent-color: #3A86FF;
+    --text-color: #1D3557;
+    --success-color: #2ECC71;
+    --form-bg: white;
+}
+
+.add-user-container {
+    display: flex;
+    height: 100vh;
+    background: var(--primary-bg);
+    width: 100vw;
+}
+
+.add-user-main {
+    flex: 1;
+    padding: 40px;
+    background: var(--form-bg);
+    border-radius: 12px;
+    margin: 30px;
+    width: calc(100% - 260px);
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 34px;
+    font-weight: bold;
+    color: var(--accent-color);
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.add-user-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.input-group {
+    text-align: left;
+}
+
+.input-group label {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text-color);
+}
+
+.input-group input,
+.input-group select {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid var(--primary-bg);
+    border-radius: 8px;
+    font-size: 16px;
+    transition: 0.3s ease-in-out;
+    background: var(--form-bg);
+}
+
+.input-group input:focus,
+.input-group select:focus {
+    outline: none;
+    border-color: var(--accent-color);
+    box-shadow: 0 0 8px rgba(58, 134, 255, 0.5);
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 17px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    background-color: var(--accent-color);
+    color: white;
+    margin-top: 10px;
+}
+
+.submit-btn:hover {
+    background-color: darkblue;
+    transform: scale(1.05);
+}

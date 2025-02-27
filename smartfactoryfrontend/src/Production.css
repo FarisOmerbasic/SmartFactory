@@ -24,15 +24,46 @@
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
     border-radius: 12px;
     margin: 20px auto;
+    width: calc(100% - 260px);
     max-width: 1300px;
 }
 
-h1 {
+/* Header section: Centers the heading in the page and aligns the button to the right */
+.header-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* Center the heading */
+.header-container h1 {
     font-size: 34px;
     font-weight: bold;
     color: var(--accent-color);
+    flex: 1;
     text-align: center;
-    margin-bottom: 20px;
+}
+
+/* Style for the report button (placed on the right) */
+.report-btn {
+    position: absolute;
+    right: 0;
+    padding: 12px 20px;
+    font-size: 16px;
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.report-btn:hover {
+    background: darkblue;
+    transform: scale(1.05);
 }
 
 .cards {
@@ -100,23 +131,6 @@ h1 {
     font-size: 18px;
 }
 
-.report-btn {
-    display: block;
-    margin: 30px auto;
-    padding: 15px 25px;
-    font-size: 18px;
-    background: var(--accent-color);
-    color: white;
-    border: none;
-    cursor: pointer;
-    border-radius: 8px;
-    transition: 0.3s;
-}
-
-.report-btn:hover {
-    background: #0056b3;
-}
-
 @media screen and (max-width: 1200px) {
     .main-content {
         width: 95%;
@@ -161,8 +175,21 @@ h1 {
         font-size: 16px;
     }
 
+    /* Ensure proper alignment of the header section on small screens */
+    .header-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .header-container h1 {
+        text-align: center;
+        flex: none;
+    }
+
     .report-btn {
-        width: 90%;
+        position: static;
+        width: 100%;
         text-align: center;
     }
 }
