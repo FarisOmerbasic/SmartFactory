@@ -2,6 +2,7 @@
 using System.IO;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SmartFactoryWebApi.Dtos;
 
 namespace SmartFactoryWebApi
 {
@@ -33,7 +34,7 @@ namespace SmartFactoryWebApi
             return JObject.Parse(json);
         }
 
-        public int UpdateJson(string id,string keyUpper, double newValueUpper, string keyLower, double newValueLower)
+        public int UpdateJson(UpdateThresholdDto request)
         {
             JObject jsonObj = ReadJson();
 
@@ -44,13 +45,18 @@ namespace SmartFactoryWebApi
                 return 1;
             }
 
-            var thresholdObject = thresholds.FirstOrDefault(obj => (string)obj["id"] == id);
+            var thresholdObject = thresholds.FirstOrDefault(obj => (string)obj["id"] == request.DeviceId.ToString());
 
 
             if (thresholdObject != null)
             {
-                thresholdObject[keyUpper]=newValueUpper;
-                thresholdObject[keyLower]=newValueLower;
+                thresholdObject[nameof(request.criticalLowThreshold)]=request.criticalLowThreshold;
+                thresholdObject[nameof(request.criticalHighThreshold)] = request.criticalHighThreshold;
+                thresholdObject[nameof(request.WarningLowThreshold)] = request.WarningLowThreshold;
+                thresholdObject[nameof(request.WarningHighThreshold)] = request.WarningHighThreshold;
+                thresholdObject[nameof(request.normalLowThreshold)] = request.normalHighThreshold;
+                thresholdObject[nameof(request.normalHighThreshold)] = request.normalHighThreshold;
+
                 File.WriteAllText(_filePath, jsonObj.ToString(Formatting.Indented));
 
                 return 0;

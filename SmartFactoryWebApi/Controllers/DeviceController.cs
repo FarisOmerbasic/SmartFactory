@@ -123,41 +123,43 @@ namespace SmartFactoryWebApi.Controllers
             string jsonFilePath = "C:\\Users\\Emin Brankovic\\Desktop\\Coding Battle\\SmartFactory\\SmartFactoryWebApi\\threshold.json";
             JsonFileHandler jsonHandler = new JsonFileHandler(jsonFilePath);
 
-            double criticalLowThreshold;
-            double normalLowThreshold;
-            double normalHighThreshold;
-            double criticalHighThreshold;
-            double WarningLowThreshold;
-            double WarningHighThreshold;
+            //double criticalLowThreshold;
+            //double normalLowThreshold;
+            //double normalHighThreshold;
+            //double criticalHighThreshold;
+            //double WarningLowThreshold;
+            //double WarningHighThreshold;
 
             int errorCode;
 
-            switch (requset.Type)
-            {
-                case ThresholdTypes.Normal:
-                    normalHighThreshold = requset.UpperBound;
-                    normalLowThreshold=requset.LowerBound;
-                    errorCode=jsonHandler.UpdateJson(requset.DeviceId.ToString(),nameof(normalHighThreshold), normalHighThreshold, nameof(normalLowThreshold), normalLowThreshold);
-                    if (errorCode != 0)
-                        return BadRequest("Error updating threshold");
-                    break;
-                case ThresholdTypes.Warning:
-                    WarningHighThreshold=requset.UpperBound;
-                    WarningLowThreshold = requset.LowerBound;
-                    errorCode = jsonHandler.UpdateJson(requset.DeviceId.ToString(),nameof(WarningHighThreshold), WarningHighThreshold, nameof(WarningLowThreshold), WarningLowThreshold);
-                    if(errorCode!=0)
-                        return BadRequest("Error updating threshold");
-                    break;
-                case ThresholdTypes.Critical:
-                    criticalHighThreshold= requset.UpperBound;
-                    criticalLowThreshold = requset.LowerBound;
-                    errorCode = jsonHandler.UpdateJson(requset.DeviceId.ToString(),nameof(criticalHighThreshold), criticalHighThreshold, nameof(criticalLowThreshold), criticalLowThreshold);
-                    if (errorCode != 0)
-                        return BadRequest("Error updating threshold");
-                    break;
-                default:
-                    break;
-            }
+            jsonHandler.UpdateJson(requset);
+
+            //switch (requset.Type)
+            //{
+            //    case ThresholdTypes.Normal:
+            //        normalHighThreshold = requset.UpperBound;
+            //        normalLowThreshold=requset.LowerBound;
+            //        errorCode=jsonHandler.UpdateJson(requset.DeviceId.ToString(),nameof(normalHighThreshold), normalHighThreshold, nameof(normalLowThreshold), normalLowThreshold);
+            //        if (errorCode != 0)
+            //            return BadRequest("Error updating threshold");
+            //        break;
+            //    case ThresholdTypes.Warning:
+            //        WarningHighThreshold=requset.UpperBound;
+            //        WarningLowThreshold = requset.LowerBound;
+            //        errorCode = jsonHandler.UpdateJson(requset.DeviceId.ToString(),nameof(WarningHighThreshold), WarningHighThreshold, nameof(WarningLowThreshold), WarningLowThreshold);
+            //        if(errorCode!=0)
+            //            return BadRequest("Error updating threshold");
+            //        break;
+            //    case ThresholdTypes.Critical:
+            //        criticalHighThreshold= requset.UpperBound;
+            //        criticalLowThreshold = requset.LowerBound;
+            //        errorCode = jsonHandler.UpdateJson(requset.DeviceId.ToString(),nameof(criticalHighThreshold), criticalHighThreshold, nameof(criticalLowThreshold), criticalLowThreshold);
+            //        if (errorCode != 0)
+            //            return BadRequest("Error updating threshold");
+            //        break;
+            //    default:
+            //        break;
+            //}
 
 
             return Ok("Threshold updated");
