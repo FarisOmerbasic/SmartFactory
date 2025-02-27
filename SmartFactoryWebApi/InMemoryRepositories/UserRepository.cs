@@ -28,6 +28,11 @@ namespace SmartFactoryWebApi.InMemoryRepositories
             return user;
         }
 
+        public static void AddUser(User user)
+        {
+            Users.Add(user);
+        }
+
         public static List<User> GetAllUsers()
         {
             return Users;

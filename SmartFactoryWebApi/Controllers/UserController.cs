@@ -10,6 +10,23 @@ namespace SmartFactoryWebApi.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
+
+        [HttpPost("register")]
+        public ActionResult<string> Register([FromBody] User request)
+        {
+            var user = UserRepository.GetUserByEmail(request.Email);
+
+            if (user!=null) return BadRequest("User already exists with that email");
+
+            UserRepository.AddUser(request);
+
+            return Ok("User created");
+        }
+
+
+
+
+
         [HttpPost("login")]
         public ActionResult<UserDto> Login([FromBody] UserLoginDto request)
         {
@@ -27,6 +44,24 @@ namespace SmartFactoryWebApi.Controllers
                 Email = user.Email,
                 Role = user.Role,
             };
+
+            return Ok(resoponse);
+        }
+
+        [HttpGet("getAllUsers")]
+        public ActionResult<List<UserDto>> GetAllUsers()
+        {
+            var users=UserRepository.GetAllUsers();
+
+            var resoponse = users.Select(u => new UserDto
+            {
+                Id = u.Id,
+                FirstName = u.FirstName,
+                LastName = u.LastName,
+                Email = u.Email,
+                Role = u.Role,
+            }).ToList();
+
 
             return Ok(resoponse);
         }
