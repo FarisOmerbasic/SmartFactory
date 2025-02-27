@@ -2,17 +2,12 @@ import React, { useEffect, useState } from "react";
 import Menu from "./menu";
 import "./Maintenance.css";
 
-const alerts = [
-  { priority: "High", issue: "Bearing Wear", description: "CNC Machine #3 - Estimated 48h until critical.", action: "Schedule Service" },
-  { priority: "Medium", issue: "Motor Temperature", description: "Assembly Line B motor temperature trending above normal.", action: "Schedule Service" },
-  { priority: "Low", issue: "Belt Tension", description: "Conveyor #2 belt tension below optimal.", action: "Schedule Service" }
-];
-
 const Maintenance = () => {
   const [scheduledMaintenance, setScheduledMaintenance] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedIssue, setSelectedIssue] = useState(null);
   const [successMessage, setSuccessMessage] = useState("");
+  const [lowPriorityMachine, setLowPriorityMachine] = useState(null);
   const [formData, setFormData] = useState({
     date: "",
     time: "",
@@ -20,8 +15,46 @@ const Maintenance = () => {
     problem: "",
     place: "",
   });
+  const [criticalMachine, setCriticalMachine] = useState(null);
+  const [runningMachine, setRunningMachine] = useState(null);
 
-  // Fetch scheduled maintenance from API
+  // First useEffect for fetching machine overview
+  useEffect(() => {
+    const fetchMachineOverview = async () => {
+      try {
+        const response = await fetch("http://localhost:5270/api/Machine/machineOverview");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        console.log("Fetched machine overview:", data); // Proverite šta je sadržaj data
+
+        // Proverite da li 'machines' postoji i da li je niz
+        if (Array.isArray(data.machines)) {
+          // Sortiraj mašine po temperaturi (pretpostavljamo da svaka mašina ima 'temperature' atribut)
+          const sortedMachines = data.machines.sort((a, b) => b.temperature - a.temperature); // Sortiraj po temperaturi od najveće ka najmanjoj
+          
+          // Uzmi prvu tri mašine za visok, srednji i nizak prioritet
+          const highPriorityMachine = sortedMachines[0];  // Mašina sa najvećom temperaturom
+          const mediumPriorityMachine = sortedMachines[1]; // Mašina sa drugom najvećom temperaturom
+          const lowPriorityMachine = sortedMachines[sortedMachines.length - 1]; // Mašina sa najmanjom temperaturom
+
+          setCriticalMachine(highPriorityMachine);  // Dodeli high priority mašinu
+          setRunningMachine(mediumPriorityMachine);  // Dodeli medium priority mašinu
+          setLowPriorityMachine(lowPriorityMachine);  // Dodeli low priority mašinu
+        } else {
+          console.error("machines is not an array:", data.machines);
+        }
+      } catch (error) {
+        console.error("Error fetching machine overview:", error);
+      }
+    };
+
+    fetchMachineOverview();
+  }, []);
+  
+
+  // Second useEffect for fetching scheduled maintenance
   useEffect(() => {
     const fetchScheduledMaintenance = async () => {
       try {
@@ -35,6 +68,7 @@ const Maintenance = () => {
         console.error("Error fetching scheduled maintenance:", error);
       }
     };
+
     fetchScheduledMaintenance();
   }, []);
 
@@ -60,7 +94,6 @@ const Maintenance = () => {
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Ensure all fields are filled before proceeding
     if (!formData.date || !formData.time || !formData.expectedDuration) {
       alert("Please fill in all fields before scheduling.");
       return;
@@ -72,7 +105,7 @@ const Maintenance = () => {
       expectedDuration: formData.expectedDuration,
     };
     try {
-      const response = await fetch("http://localhost:5270/api/ScheduledMaintenance/AddSchedule", { // Promijenjena ruta
+      const response = await fetch("http://localhost:5270/api/ScheduledMaintenance/AddSchedule", { 
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newScheduled),
@@ -80,9 +113,7 @@ const Maintenance = () => {
       if (!response.ok) {
         throw new Error("Failed to schedule maintenance");
       }
-      // Update UI instantly
       setScheduledMaintenance((prev) => [...prev, newScheduled]);
-      // Show success message
       setSuccessMessage(":white_tick: Maintenance successfully scheduled!");
       setTimeout(() => setSuccessMessage(""), 3000);
       closeModal();
@@ -96,24 +127,42 @@ const Maintenance = () => {
       <Menu />
       <main className="main-content">
         <h1>Maintenance Overview</h1>
-        {/* Success Message */}
         {successMessage && <div className="success-message">{successMessage}</div>}
         <h2>Critical Alerts</h2>
         <div className="cards">
-          {alerts.map((alert, index) => (
-            <div key={index} className={`card ${alert.priority.toLowerCase()}-priority`}>
-              <p>{alert.priority} Priority</p>
-              <h2>{alert.issue}</h2>
-              <small>{alert.description}</small>
-              <button
-                className={`${alert.priority.toLowerCase()}-btn`}
-                onClick={() => openModal(alert.issue)}
-              >
-                {alert.action}
-              </button>
-            </div>
-          ))}
-        </div>
+  {criticalMachine && (
+    <div className="card high-priority">
+      <p>High Priority</p>
+      <h2>{criticalMachine.machineName}</h2> {/* Koristite 'machineName' umesto 'name' */}
+      <small>Critical Status</small>
+      <button className="high-btn" onClick={() => openModal(criticalMachine.machineName)}>
+        Schedule Service
+      </button>
+    </div>
+  )}
+  {runningMachine && (
+    <div className="card medium-priority">
+      <p>Medium Priority</p>
+      <h2>{runningMachine.machineName}</h2> {/* Koristite 'machineName' umesto 'name' */}
+      <small>Running Status</small>
+      <button className="medium-btn" onClick={() => openModal(runningMachine.machineName)}>
+        Schedule Service
+      </button>
+    </div>
+  )}
+  {lowPriorityMachine && (
+    <div className="card low-priority">
+      <p>Low Priority</p>
+      <h2>{lowPriorityMachine.machineName}</h2> {/* Koristite 'machineName' umesto 'name' */}
+      <small>Low Status</small>
+      <button className="low-btn" onClick={() => openModal(lowPriorityMachine.machineName)}>
+        Schedule Service
+      </button>
+    </div>
+  )}
+</div>
+
+
         <h2>Scheduled Maintenance</h2>
         <div className="scheduled-list">
           {scheduledMaintenance.length > 0 ? (
@@ -128,7 +177,7 @@ const Maintenance = () => {
           )}
         </div>
       </main>
-      {/* Modal Popup */}
+
       {isModalOpen && (
         <div className="modal-overlay">
           <div className="modal">

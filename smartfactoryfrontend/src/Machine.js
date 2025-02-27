@@ -9,6 +9,7 @@ const Machine = () => {
   const [error, setError] = useState(null);
   const [startTime, setStartTime] = useState(Date.now());
 
+  // Funkcija za dohvat podataka s API-a
   const fetchData = () => {
     fetch("http://localhost:5270/api/Machine/machineOverview")
       .then((response) => {
@@ -18,7 +19,7 @@ const Machine = () => {
         return response.json();
       })
       .then((data) => {
-        setData(data);
+        setData(data); // Postavljanje podataka iz API-ja
         setStartTime(Date.now()); // Resetujemo startno vrijeme kad stignu novi podaci
         setLoading(false);
       })
@@ -28,43 +29,41 @@ const Machine = () => {
       });
   };
 
+  // Učitaj podatke na početku i svakih 60 sekundi
   useEffect(() => {
     fetchData();
     const interval = setInterval(fetchData, 60000); // Refresh podataka svakih 60s
     return () => clearInterval(interval);
   }, []);
 
+  // Funkcija koja ažurira uptime svakih 1 sekundu
   useEffect(() => {
-  const interval = setInterval(() => {
-    setData((prevData) => {
-      if (!prevData) return prevData;
-      const elapsedTime = (Date.now() - startTime) / 3600000; // Vrijeme u satima
+    const interval = setInterval(() => {
+      setData((prevData) => {
+        if (!prevData) return prevData;
+        const elapsedTime = (Date.now() - startTime) / 3600000; // Vrijeme u satima
 
-      return {
-        ...prevData,
-        machines: prevData.machines.map((machine) => {
-          // Osiguraj da je upTime broj ili postavi na 0 ako nije
-          const currentUpTime = parseFloat(machine.upTime) || 0; // Parse i provjeri
+        return {
+          ...prevData,
+          machines: prevData.machines.map((machine) => {
+            const currentUpTime = parseFloat(machine.upTime) || 0; // Osiguraj da je upTime broj
+            const updatedUpTime = currentUpTime + elapsedTime > currentUpTime 
+              ? (currentUpTime + elapsedTime).toFixed(2) 
+              : currentUpTime.toFixed(2); // Ne dodaj ako je elapsedTime 0
 
-          // Ažuriraj upTime, ali dodaj samo ako elapsedTime nije 0
-          const updatedUpTime = currentUpTime + elapsedTime > currentUpTime 
-            ? (currentUpTime + elapsedTime).toFixed(2) 
-            : currentUpTime.toFixed(2); // Ne dodaj ako je elapsedTime 0
+            return {
+              ...machine,
+              upTime: updatedUpTime, // Ažurirani uptime
+            };
+          }),
+        };
+      });
+    }, 1000); // Ažuriraj uptime svake sekunde
 
-          return {
-            ...machine,
-            upTime: updatedUpTime, // Ažurirani uptime
-          };
-        }),
-      };
-    });
-  }, 1000); // Ažuriraj uptime svake sekunde
+    return () => clearInterval(interval);
+  }, [startTime]);
 
-  return () => clearInterval(interval);
-}, [startTime]);
-
-  
-
+  // Prikazivanje dok se podaci učitavaju ili ako dođe do greške
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error.message}</p>;
 
@@ -110,13 +109,13 @@ const Machine = () => {
             </thead>
             <tbody>
               {data.machines.map((machine) => (
-                <tr key={machine.machineId}>
+                <tr key={machine.machineName}>
                   <td>{machine.machineName}</td>
-                  <td className={machine.isOperational ? "running" : "critical"}>
-                    {machine.isOperational ? "Running" : "Critical"}
+                  <td className={machine.status === "Runing" ? "running" : "critical"}>
+                    {machine.status === "Runing" ? "Running" : "Critical"}
                   </td>
                   <td>{machine.upTime}</td>
-                  <td>{machine.currentTemperature}</td>
+                  <td>{machine.temperature}</td>
                 </tr>
               ))}
             </tbody>
