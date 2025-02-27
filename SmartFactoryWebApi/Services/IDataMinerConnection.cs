@@ -12,5 +12,6 @@ namespace SmartFactoryWebApi.Services
         Task<Sensor?> GetDeviceByName(string deviceName, CancellationToken cancellationToken);
         Task<List<Sensor>?> GetDeviceByCategoryName(string categoryName, CancellationToken cancellationToken);
         Task<List<SensorDataDto>?> GetDeviceTrending(int deviceId, CancellationToken cancellationToken);
+        Task<List<SensorRecordAverage>?> GetDeviceTrendingAverage(int deviceId, CancellationToken cancellationToken);
     }
 }

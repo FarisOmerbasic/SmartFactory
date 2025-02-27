@@ -97,13 +97,10 @@ namespace SmartFactoryWebApi.Services
             if (!response.IsSuccessStatusCode)
                 return new List<SensorDataDto>(); 
 
-            var stream = await response.Content.ReadAsStreamAsync();
+            var stream = await response.Content.ReadAsStringAsync();
             var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
             var trendingData = JsonSerializer.Deserialize<Trending>(stream, options);
 
-
-            if (trendingData?.Values.Count <= 0)
-                return new List<SensorDataDto>();
 
             var sensorList = trendingData.Records.Values
                   .SelectMany(records => records)
@@ -115,6 +112,34 @@ namespace SmartFactoryWebApi.Services
                   .ToList();
 
             return sensorList;
+        }
+
+
+        public async Task<List<SensorRecordAverage>?> GetDeviceTrendingAverage(int deviceId, CancellationToken cancellationToken)
+        {
+            var response = await _client.GetAsync($"getTrendingInfo?id={deviceId}&&type=average", cancellationToken);
+
+            if (!response.IsSuccessStatusCode)
+                return new List<SensorRecordAverage>();
+
+            var stream = await response.Content.ReadAsStringAsync();
+            var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+            var trendingData = JsonSerializer.Deserialize<TrendingAverage>(stream, options);
+
+
+            var records=trendingData.Records.Values
+                  .SelectMany(records => records)
+                  .Select(record => new SensorRecordAverage
+                  {
+                      AverageValue=record.AverageValue,
+                      MinimumValue=record.MinimumValue,
+                      MaximumValue=record.MaximumValue,
+                      Status=record.Status,
+                      Time=record.Time
+                  })
+                  .ToList();
+
+            return records;
         }
     }
 }
