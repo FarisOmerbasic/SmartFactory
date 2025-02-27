@@ -1,4 +1,5 @@
-﻿using SmartFactoryWebApi.Models;
+﻿using SmartFactoryWebApi.Controllers;
+using SmartFactoryWebApi.Models;
 using System.Reflection.PortableExecutable;
 
 namespace SmartFactoryWebApi.Dtos
@@ -9,7 +10,7 @@ namespace SmartFactoryWebApi.Dtos
         public int WarningMachinesThreshold { get; set; }
         public int CriticalMachinesThreshold { get; set; }
         public int IdleMachines { get; set; }
-        public List<Models.Machine> Machines { get; set; }
+        public List<MachineOverviewResponse> Machines { get; set; }
 
     }
 }
