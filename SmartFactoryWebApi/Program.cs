@@ -24,7 +24,7 @@ namespace SmartFactoryWebApi
             });
 
             builder.Services.AddScoped<IDataMinerConnection, DataMinerConnection>();
-
+            builder.Services.AddSingleton<IRenderPDFReport, RenderPDFReport>();
             builder.Services.AddCors(options =>
             {
                 options.AddPolicy("AllowEverything", policy =>

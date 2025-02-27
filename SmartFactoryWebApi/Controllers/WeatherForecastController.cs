@@ -15,10 +15,12 @@ namespace SmartFactoryWebApi.Controllers
         };
 
         private readonly ILogger<WeatherForecastController> _logger;
+        private readonly IRenderPDFReport _renderPDF;
 
-        public WeatherForecastController(ILogger<WeatherForecastController> logger)
+        public WeatherForecastController(ILogger<WeatherForecastController> logger, IRenderPDFReport renderPDF)
         {
             _logger = logger;
+            _renderPDF = renderPDF;
         }
 
         [HttpGet(Name = "GetWeatherForecast")]
@@ -59,6 +61,15 @@ namespace SmartFactoryWebApi.Controllers
             return Ok(thresholds);
 
         }
+
+        //[HttpGet("RenderPDF")]
+        //public ActionResult RenderPDF()
+        //{
+        //    _renderPDF.RednderProductionReport();
+
+        //    return Ok();
+
+        //}
     }
 
     public class JsonTestResponse
