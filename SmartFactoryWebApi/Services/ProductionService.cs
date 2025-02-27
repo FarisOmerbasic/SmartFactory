@@ -91,7 +91,7 @@ namespace SmartFactoryWebApi.Services
         {
             List<string> suggestions = new List<string>();
             if (productionData.Efficiency > 70)
-                suggestions.Add($"No improvement suggestions");
+                suggestions.Add($"No major improvement suggestion");
 
             if (productionData.Efficiency < 50)
                 suggestions.Add($"Improve efficiency of {productionData.Line} - Check {productionData.Machine} for issues.");

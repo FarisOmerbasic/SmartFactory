@@ -54,14 +54,6 @@ namespace SmartFactoryWebApi.Controllers
             return Ok(productionDto);
         }
 
-        [HttpGet("CalculateProductionRate")]
-        public ActionResult<double> CalculateProductionRate([FromQuery] int totalUnitsProduced, [FromQuery] double totalTimeTaken)
-        {
-            if (totalTimeTaken <= 0)
-                return BadRequest("Total time taken must be greater than zero.");
-
-            var productionRate = _productionService.CalculateProductionRate(totalUnitsProduced, totalTimeTaken);
-            return Ok(productionRate);
-        }
-    }
+       
+}
 }

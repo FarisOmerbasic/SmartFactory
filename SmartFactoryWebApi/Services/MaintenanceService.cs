@@ -20,24 +20,6 @@ namespace SmartFactoryWebApi.Services
             return tasks.Where(task => task.Status == "Completed").Sum(task => ParseDowntime(task.Downtime));
         }
 
-        // Method to calculate the average cost per maintenance task
-        public static double CalculateAverageCost(List<MaintenanceTask> tasks)
-        {
-            if (tasks.Count == 0)
-                return 0;
-
-            return tasks.Average(task => task.Cost);
-        }
-
-        // Method to calculate the change in maintenance cost between two periods
-        public static double CalculateCostChange(double currentCost, double previousCost)
-        {
-            if (previousCost == 0)
-                return 100; // If previous cost is zero, consider it as 100% change.
-
-            return ((currentCost - previousCost) / previousCost) * 100;
-        }
-
         // Method to generate optimization suggestions based on maintenance tasks
         public static List<string> GenerateOptimizationSuggestions(List<MaintenanceTask> tasks)
         {
