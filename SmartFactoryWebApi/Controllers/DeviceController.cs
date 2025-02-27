@@ -123,53 +123,38 @@ namespace SmartFactoryWebApi.Controllers
             string jsonFilePath = "C:\\Users\\Lenovo\\Source\\Repos\\SmartFactory\\SmartFactoryWebApi\\threshold.json";
             JsonFileHandler jsonHandler = new JsonFileHandler(jsonFilePath);
 
-            //double criticalLowThreshold;
-            //double normalLowThreshold;
-            //double normalHighThreshold;
-            //double criticalHighThreshold;
-            //double WarningLowThreshold;
-            //double WarningHighThreshold;
-
             int errorCode;
 
             jsonHandler.UpdateJson(requset);
 
-            //switch (requset.Type)
-            //{
-            //    case ThresholdTypes.Normal:
-            //        normalHighThreshold = requset.UpperBound;
-            //        normalLowThreshold=requset.LowerBound;
-            //        errorCode=jsonHandler.UpdateJson(requset.DeviceId.ToString(),nameof(normalHighThreshold), normalHighThreshold, nameof(normalLowThreshold), normalLowThreshold);
-            //        if (errorCode != 0)
-            //            return BadRequest("Error updating threshold");
-            //        break;
-            //    case ThresholdTypes.Warning:
-            //        WarningHighThreshold=requset.UpperBound;
-            //        WarningLowThreshold = requset.LowerBound;
-            //        errorCode = jsonHandler.UpdateJson(requset.DeviceId.ToString(),nameof(WarningHighThreshold), WarningHighThreshold, nameof(WarningLowThreshold), WarningLowThreshold);
-            //        if(errorCode!=0)
-            //            return BadRequest("Error updating threshold");
-            //        break;
-            //    case ThresholdTypes.Critical:
-            //        criticalHighThreshold= requset.UpperBound;
-            //        criticalLowThreshold = requset.LowerBound;
-            //        errorCode = jsonHandler.UpdateJson(requset.DeviceId.ToString(),nameof(criticalHighThreshold), criticalHighThreshold, nameof(criticalLowThreshold), criticalLowThreshold);
-            //        if (errorCode != 0)
-            //            return BadRequest("Error updating threshold");
-            //        break;
-            //    default:
-            //        break;
-            //}
-
-
             return Ok("Threshold updated");
+        }
+
+        [HttpGet("GetCriticalAndWarningSensors")]
+        public async Task<ActionResult<GetCriticalAndWarningSensorsResponse>> GetCriticalAndWarningSensors(CancellationToken cancellationToken)
+        {
+
+            var allSensors = await dataMinerConnection.GetAllDevices(cancellationToken);
+
+            List<Sensor> machineSenors= allSensors.Where(s => s.Name.Contains("Machine")).ToList();
+
+            (List<Sensor>, List<Sensor>) result = CountThresholds(machineSenors);
+
+            var response = new GetCriticalAndWarningSensorsResponse
+            {
+                Critical = result.Item1,
+                Warning = result.Item2,
+            };
+
+            return Ok(response);
+
         }
 
 
 
         private List<JsonTestResponse>? ReadFromJson()
         {
-            string jsonFilePath = "C:\\Users\\Lenovo\\Source\\Repos\\SmartFactory\\SmartFactoryWebApi\\threshold.json";
+            string jsonFilePath = "C:\\Users\\Lenovo\\Source\\Repos\\SmartFactory\\SmartFactoryWebApi\\threshold.json"; 
             JsonFileHandler jsonHandler = new JsonFileHandler(jsonFilePath);
             JObject jsonData;
 
@@ -201,5 +186,42 @@ namespace SmartFactoryWebApi.Controllers
 
             return "Normal";
         }
+
+        private (List<Sensor>, List<Sensor>) CountThresholds(List<Sensor> sensors)
+        {
+
+            var thresholds = ReadFromJson();
+
+            var machineThresholds= thresholds.Where(s => s.Name.Contains("Machine")).ToList();
+
+            string CurrentThreshold;
+            List<Sensor> critical = new List<Sensor>();
+            List<Sensor> warning = new List<Sensor>();
+            foreach (var sensor in sensors)
+            {
+                var threshold = machineThresholds.FirstOrDefault(t => t.Name == sensor.Name);
+                if (threshold != null)
+                {
+                    CurrentThreshold = DetermineThreshold(sensor.NumericValue, threshold);
+
+                    if (CurrentThreshold == "Critical")
+                    {
+                        critical.Add(sensor);
+                    }
+                    if (CurrentThreshold == "Warning")
+                    {
+                        warning.Add(sensor);
+                    }
+                }
+            }
+
+            return (critical, warning);
+        }
+    }
+
+    public class GetCriticalAndWarningSensorsResponse
+    {
+        public List<Sensor> Critical { get; set; }=new List<Sensor>();
+        public List<Sensor> Warning { get; set; }=new List<Sensor> ();
     }
 }
