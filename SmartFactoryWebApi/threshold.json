@@ -5,12 +5,12 @@
       "name": "TempGuard-500",
       "lowerBound": -10,
       "upperBound": 120,
-      "criticalLowThreshold": -18,
-      "normalLowThreshold": -7,
-      "normalHighThreshold": 130,
-      "criticalHighThreshold": 125,
-      "WarningLowThreshold": -15,
-      "WarningHighThreshold": 140
+      "criticalLowThreshold": 0.0,
+      "normalLowThreshold": 0.0,
+      "normalHighThreshold": 0.0,
+      "criticalHighThreshold": 0.0,
+      "WarningLowThreshold": 0.0,
+      "WarningHighThreshold": 0.0
     },
     {
       "id": "3",

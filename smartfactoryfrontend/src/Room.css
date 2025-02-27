@@ -132,14 +132,14 @@ button:hover {
   justify-content: space-between;
 }
 .confirm-btn {
-  background: green;
+  background: rgb(57, 106, 57);
   color: white;
   border: none;
   padding: 8px 15px;
   cursor: pointer;
 }
 .cancel-btn {
-  background: red;
+  background: rgb(142, 58, 58);
   color: white;
   border: none;
   padding: 8px 15px;
@@ -161,14 +161,11 @@ button:hover {
     padding: 20px;
   }
 }
-
 .threshold-button {
-  display: flex;
   align-items: center;
+  margin-bottom: 20px;
   justify-content: center;
-  gap: 8px;
-  padding: 10px 15px;
-  font-size: 14px;
+  font-size: 16px;
   font-weight: bold;
   color: white;
   background-color: #3A86FF;
@@ -176,6 +173,8 @@ button:hover {
   border-radius: 6px;
   cursor: pointer;
   transition: background 0.3s ease, transform 0.2s ease;
+  height: fit-content;
+  width: fit-content;
 }
 .threshold-button:hover {
   background-color: #2B6ECB;
@@ -184,18 +183,17 @@ button:hover {
 .threshold-button:active {
   transform: scale(0.95);
 }
-
 /* Styling for Next Room and Previous Room buttons */
 .room-navigation {
   padding: 12px 20px;
   font-size: 16px;
   font-weight: bold;
-  border-radius: 8px;
+  border-radius: 8px round;
   cursor: pointer;
   transition: background 0.3s ease, transform 0.2s ease;
 }
 .prev-room {
-  background-color: #FF6B6B;
+  background-color: #3A86FF;
   color: white;
 }
 .next-room {
@@ -208,4 +206,133 @@ button:hover {
 }
 .room-navigation:active {
   transform: scale(0.95);
+}
+.system-health {
+  border-collapse: separate;
+  border-spacing: 0;
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.system-health th {
+  background: var(--accent-color);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  padding: 20px;
+}
+.system-health tr:nth-child(even) {
+  background-color: rgba(58, 134, 255, 0.1); /* Light accent */
+}
+.system-health tr:hover {
+  background-color: rgba(58, 134, 255, 0.2); /* Slightly darker on hover */
+  transition: background 0.3s ease-in-out;
+}
+.system-health td {
+  padding: 16px;
+  font-size: 16px;
+  border-bottom: 1px solid #ddd;
+}
+.system-health td.success {
+  color: var(--success-color);
+  font-weight: bold;
+}
+.system-health td.danger {
+  color: var(--warning-color);
+  font-weight: bold;
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: round;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease-in-out;
+}
+/* Modal Content */
+.modal-room {
+  background:var(--accent-color);
+  padding: 25px;
+  border-radius: 12px;
+  width: 420px;
+  max-width: 90%;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+  text-align: center;
+  animation: scaleIn 0.3s ease-in-out;
+  border-radius: round;
+}
+/* Modal Header */
+.modal-room h2 {
+  font-size: 22px;
+  font-weight: bold;
+  background-color: rgba(255, 255, 255, 0.595);
+  color: var(--text-color);
+  margin-bottom: 15px;
+  border-radius: 12px round;
+}
+/* Modal Labels */
+.modal-room label {
+  display: block;
+  border-radius: round;
+  border-radius: 12px round;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-color);
+  margin: 8px 0;
+  background-color: rgba(255, 255, 255, 0.84);
+  text-align: left;
+  font-style: italic;
+}
+/* Modal Inputs */
+.modal-room input {
+  border-radius: 12px round;
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  margin-top: 5px;
+  transition: border-color 0.3s ease;
+}
+.modal-room input:focus {
+  border-color: var(--accent-color);
+  outline: none;
+}
+/* Modal Actions (Buttons) */
+.modal-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+/* Oval H2 Title */
+.modal-content-room h2 {
+  background-color: var(--accent-color); /* Accent Background */
+  color: white; /* Text Color */
+  font-size: 22px;
+  font-weight: bold;
+  padding: 12px 24px;
+  border-radius: 50px; /* Oval Shape */
+  display: inline-block;
+  text-align: center;
+  margin-bottom: 15px;
+}
+/* Oval Labels */
+.modal-content-room label {
+  background-color: var(--info-color); /* Light Blue Background */
+  color: white; /* Text Color */
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 50px; /* Oval Shape */
+  display: inline-block;
+  margin: 10px 0;
+  text-align: center;
+  width: fit-content; /* Makes it wrap around text */
 }

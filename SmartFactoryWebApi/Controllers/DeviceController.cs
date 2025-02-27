@@ -120,7 +120,7 @@ namespace SmartFactoryWebApi.Controllers
         public  ActionResult UpdateThresholdValue([FromBody] UpdateThresholdDto requset)
         {
 
-            string jsonFilePath = "C:\\Users\\Emin Brankovic\\Desktop\\Coding Battle\\SmartFactory\\SmartFactoryWebApi\\threshold.json";
+            string jsonFilePath = "C:\\Users\\Lenovo\\Source\\Repos\\SmartFactory\\SmartFactoryWebApi\\threshold.json";
             JsonFileHandler jsonHandler = new JsonFileHandler(jsonFilePath);
 
             //double criticalLowThreshold;
@@ -169,7 +169,7 @@ namespace SmartFactoryWebApi.Controllers
 
         private List<JsonTestResponse>? ReadFromJson()
         {
-            string jsonFilePath = "C:\\Users\\Emin Brankovic\\Desktop\\Coding Battle\\SmartFactory\\SmartFactoryWebApi\\threshold.json";
+            string jsonFilePath = "C:\\Users\\Lenovo\\Source\\Repos\\SmartFactory\\SmartFactoryWebApi\\threshold.json";
             JsonFileHandler jsonHandler = new JsonFileHandler(jsonFilePath);
             JObject jsonData;
 
