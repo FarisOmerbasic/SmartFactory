@@ -3,10 +3,9 @@ using System.Collections.Generic;
 
 namespace SmartFactoryWebApi.Services
 {
-    public static class ProductionService
+    public class ProductionService
     {
-        // Method to calculate throughput for a specific production line
-        public static int CalculateThroughput(string line)
+        public int CalculateThroughput(string line)
         {
             return line switch
             {
@@ -17,8 +16,7 @@ namespace SmartFactoryWebApi.Services
             };
         }
 
-        // Method to get the status of a production line
-        public static string GetStatus(string line)
+        public string GetStatus(string line)
         {
             return line switch
             {
@@ -29,19 +27,18 @@ namespace SmartFactoryWebApi.Services
             };
         }
 
-        // Method to get the machine associated with a production line
-        public static string GetMachine(string line)
+        public string GetMachine(string line)
         {
             return line switch
             {
-                "Line C" => "M103",
+                "Line A" => "M101",
                 "Line B" => "M205",
-                _ => "Unknown"
+                "Line C" => "M103",
+                _ => "No Machine Assigned"
             };
         }
 
-        // Method to get the issue associated with a production line
-        public static string GetIssue(string line)
+        public string GetIssue(string line)
         {
             return line switch
             {
@@ -51,8 +48,7 @@ namespace SmartFactoryWebApi.Services
             };
         }
 
-        // Method to calculate efficiency for a production line
-        public static double CalculateEfficiency(string line)
+        public double CalculateEfficiency(string line)
         {
             return line switch
             {
@@ -62,8 +58,7 @@ namespace SmartFactoryWebApi.Services
             };
         }
 
-        // Method to calculate target deviation for a production line
-        public static double CalculateTargetDeviation(string line)
+        public double CalculateTargetDeviation(string line)
         {
             return line switch
             {
@@ -73,65 +68,36 @@ namespace SmartFactoryWebApi.Services
             };
         }
 
-        // Method to calculate today's projected output
-        public static int CalculateTodaysOutput()
+        public int CalculateTodaysOutput(string line)
         {
-            return 2150;
+            int throughput = CalculateThroughput(line);
+            return throughput * 8;
         }
 
-        // Method to calculate the week's projected output
-        public static int CalculateWeeksProjection()
+        public int CalculateWeeksProjection(string line)
         {
-            return 10500;
+            return CalculateTodaysOutput(line) * 5; 
         }
 
-        // Method to calculate production rate
-        public static double CalculateProductionRate(int totalUnitsProduced, double totalTimeTaken)
+        public double CalculateProductionRate(int totalUnitsProduced, double totalTimeTaken)
         {
             if (totalTimeTaken <= 0)
-                return 0; // Avoid division by zero
+                throw new ArgumentException("Total time taken must be greater than zero.");
 
             return totalUnitsProduced / totalTimeTaken;
         }
 
-        // Method to generate production data for a specific line
-        public static ProductionDto GetProductionData(string line)
-        {
-            // Example values for total units produced and total time taken
-            int totalUnitsProduced = 1000; // Example value
-            double totalTimeTaken = 10.5; // Example value in hours
-
-            var productionData = new ProductionDto
-            {
-                Line = line,
-                Throughput = CalculateThroughput(line),
-                Status = GetStatus(line),
-                Machine = GetMachine(line),
-                Issue = GetIssue(line),
-                Efficiency = CalculateEfficiency(line),
-                TargetDeviation = CalculateTargetDeviation(line),
-                TodaysProjectedOutput = CalculateTodaysOutput(),
-                WeeksProjection = CalculateWeeksProjection(),
-                ProductionRate = CalculateProductionRate(totalUnitsProduced, totalTimeTaken) // Add production rate
-            };
-
-            return productionData;
-        }
-
-        // Method to generate optimization suggestions based on production data
-        public static List<string> GenerateOptimizationSuggestions(ProductionDto productionData)
+        public List<string> GenerateOptimizationSuggestions(ProductionDto productionData)
         {
             List<string> suggestions = new List<string>();
+            if (productionData.Efficiency > 70)
+                suggestions.Add($"No improvement suggestions");
 
             if (productionData.Efficiency < 50)
-            {
                 suggestions.Add($"Improve efficiency of {productionData.Line} - Check {productionData.Machine} for issues.");
-            }
 
             if (productionData.TargetDeviation < -20)
-            {
                 suggestions.Add($"Address target deviation on {productionData.Line} - Investigate {productionData.Issue}.");
-            }
 
             return suggestions;
         }
