@@ -132,14 +132,18 @@ button:hover {
   justify-content: space-between;
 }
 .confirm-btn {
+  display: block;
+  margin: 10px auto;    
   background: rgb(57, 106, 57);
   color: white;
   border: none;
   padding: 8px 15px;
   cursor: pointer;
+  width: 80px;
+  height: 40px;
 }
 .cancel-btn {
-  background: rgb(142, 58, 58);
+  background: red;
   color: white;
   border: none;
   padding: 8px 15px;
@@ -161,11 +165,14 @@ button:hover {
     padding: 20px;
   }
 }
-.threshold-button {
+.threshold-button, .chart-button {
   align-items: center;
   margin-bottom: 20px;
+  margin-right: 7px;
   justify-content: center;
-  font-size: 16px;
+  gap: 8px;
+  padding: 10px 15px;
+  font-size: 14px;
   font-weight: bold;
   color: white;
   background-color: #3A86FF;
@@ -173,8 +180,6 @@ button:hover {
   border-radius: 6px;
   cursor: pointer;
   transition: background 0.3s ease, transform 0.2s ease;
-  height: fit-content;
-  width: fit-content;
 }
 .threshold-button:hover {
   background-color: #2B6ECB;
@@ -183,17 +188,18 @@ button:hover {
 .threshold-button:active {
   transform: scale(0.95);
 }
+
 /* Styling for Next Room and Previous Room buttons */
 .room-navigation {
   padding: 12px 20px;
   font-size: 16px;
   font-weight: bold;
-  border-radius: 8px round;
+  border-radius: 8px;
   cursor: pointer;
   transition: background 0.3s ease, transform 0.2s ease;
 }
 .prev-room {
-  background-color: #3A86FF;
+  background-color: #FF6B6B;
   color: white;
 }
 .next-room {
@@ -335,4 +341,40 @@ button:hover {
   margin: 10px 0;
   text-align: center;
   width: fit-content; /* Makes it wrap around text */
+}
+
+/* Stilovi za modal */
+.modal-room {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); /* Centriranje modala */
+  background-color: white;
+  border-radius: 8px;
+  padding: 20px;
+  width: 80%; /* Možete prilagoditi širinu prema želji */
+  max-width: 800px; /* Maksimalna širina modala */
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.modal-room .modal-content-room {
+  width: 100%;
+}
+
+.modal-room .cancel-btn {
+  padding: 10px 20px;
+  background-color: #f44336;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.modal-room .cancel-btn:hover {
+  background-color: #d32f2f;
 }
