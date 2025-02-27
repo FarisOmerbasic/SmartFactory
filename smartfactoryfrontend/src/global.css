@@ -1,0 +1,105 @@
+@media screen and (max-width: 1024px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    .main-content {
+        width: 100%;
+    }
+
+    .cards {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 15px;
+    }
+
+    .menu {
+        width: 200px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .dashboard-container {
+        flex-direction: column;
+    }
+
+    .main-content {
+        width: 100%;
+        padding: 15px;
+    }
+
+    .cards {
+        grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+        gap: 10px;
+    }
+
+    .menu {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 10px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        background: var(--sidebar-bg);
+        z-index: 1000;
+    }
+
+    .menu ul {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: var(--sidebar-bg);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+    }
+
+    .menu.open ul {
+        display: flex;
+    }
+
+    .menu li {
+        text-align: center;
+        width: 100%;
+    }
+
+    .table-container {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+        width: 100%;
+    }
+
+    .system-health th, .system-health td {
+        padding: 10px;
+        font-size: 14px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .cards {
+        grid-template-columns: 1fr;
+        gap: 10px;
+    }
+
+
+    .system-health {
+        font-size: 12px;
+    }
+
+    .menu h2 {
+        font-size: 18px;
+    }
+
+    .menu li {
+        font-size: 12px;
+        padding: 5px;
+    }
+
+    .report-btn {
+        width: 100%;
+    }
+}

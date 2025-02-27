@@ -1,4 +1,5 @@
 import React from "react";
+import Menu from "./menu"; 
 import "./Machine.css";
 import { AlertTriangle, CircleCheck, CircleAlert, PauseCircle } from "lucide-react";
 
@@ -9,87 +10,74 @@ const machines = [
   { name: "CNC Machine #4", status: "Warning", efficiency: "45%", uptime: "2.3 hrs", temp: "High temp" }
 ];
 
+const statusCount = {
+  Running: machines.filter(m => m.status === "Running").length,
+  Warning: machines.filter(m => m.status === "Warning").length,
+  Critical: machines.filter(m => m.status === "Critical").length,
+  Idle: machines.filter(m => m.status === "Idle").length
+};
+
 const Machine = () => {
   return (
     <div className="dashboard-container">
-      {/* Sidebar */}
-      <aside className="sidebar">
-        <h2>SmartFactory</h2>
-        <nav>
-          <h3>Dashboard</h3>
-          <ul>
-            <li>Users</li>
-            <li>Analytics</li>
-            <li>Settings</li>
-          </ul>
-          <h3>Production</h3>
-          <ul>
-            <li>Machines</li>
-            <li>Energy</li>
-            <li>Maintenance</li>
-          </ul>
-        </nav>
-        <div className="admin-info">
-          <p>Admin User</p>
-          <span>System Administrator</span>
-        </div>
-      </aside>
-
-      {/* Main content */}
+      <Menu /> 
       <main className="main-content">
-        <h2 className="title">Machine Status Overview</h2>
-        <div className="status-cards">
+        <h1>Machine Status Overview</h1>
+
+        <div className="cards">
           <div className="card">
             <CircleCheck className="icon green" size={24} />
-            <h3>Running</h3>
-            <p>18</p>
+            <p>Running</p>
+            <h2>{statusCount.Running}</h2>
           </div>
           <div className="card">
             <CircleAlert className="icon yellow" size={24} />
-            <h3>Warning</h3>
-            <p>3</p>
+            <p>Warning</p>
+            <h2>{statusCount.Warning}</h2>
           </div>
           <div className="card">
             <AlertTriangle className="icon red" size={24} />
-            <h3>Critical</h3>
-            <p>1</p>
+            <p>Critical</p>
+            <h2>{statusCount.Critical}</h2>
           </div>
           <div className="card">
             <PauseCircle className="icon gray" size={24} />
-            <h3>Idle</h3>
-            <p>4</p>
+            <p>Idle</p>
+            <h2>{statusCount.Idle}</h2>
           </div>
         </div>
-        
-        <h3 className="subtitle">Critical Alerts</h3>
+
+        <h2>Critical Alerts</h2>
         <div className="alerts">
           <p><strong>CNC Machine #4 - Overheating:</strong> Temperature exceeded 85°C - Immediate attention required</p>
           <p><strong>Assembly Line B - Excessive Vibration:</strong> Vibration levels 40% above normal threshold</p>
         </div>
-        
-        <h3 className="subtitle">Machine Status Details</h3>
-        <table className="machine-table">
-          <thead>
-            <tr>
-              <th>Machine</th>
-              <th>Status</th>
-              <th>Efficiency</th>
-              <th>Uptime</th>
-              <th>Temperature</th>
-            </tr>
-          </thead>
-          <tbody>
-            {machines.map((machine, index) => (
-              <tr key={index}>
-                <td>{machine.name}</td>
-                <td>{machine.status}</td>
-                <td>{machine.efficiency}</td>
-                <td>{machine.uptime}</td>
-                <td>{machine.temp}</td>
+
+        <h2>Machine Status Details</h2>
+        <div className="table-container"> 
+          <table className="system-health">
+            <thead>
+              <tr>
+                <th>Machine</th>
+                <th>Status</th>
+                {/*<th>Efficiency</th>*/}
+                <th>Uptime</th>
+                <th>Temperature</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {machines.map((machine, index) => (
+                <tr key={index}>
+                  <td>{machine.name}</td>
+                  <td className={machine.status.toLowerCase()}>{machine.status}</td>
+                 {/* <td>{machine.efficiency}</td>*/}
+                  <td>{machine.uptime}</td>
+                  <td>{machine.temp}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </main>
     </div>
   );

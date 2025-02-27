@@ -1,156 +1,163 @@
-  /* Sidebar */
-  .sidebar {
-    width: 250px;
-    background: #f4f2ff;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+:root {
+  --primary-bg: #F0F4F8;
+  --accent-color: #3A86FF;
+  --text-color: #1D3557;
+  --success-color: #2ECC71;
+  --warning-color: #FF6B6B;
+  --card-bg: white;
 }
 
-    .sidebar h2 {
-        font-size: 20px;
-        font-weight: bold;
-    }
+.dashboard-container {
+  display: flex;
+  height: 100vh;
+  font-family: "Poppins", Arial, sans-serif;
+  background-color: var(--primary-bg);
+  color: var(--text-color);
+}
 
-    .sidebar h3 {
-        font-size: 16px;
-        margin-top: 20px;
-    }
+.main-content {
+  flex: 1;
+  padding: 40px;
+  background-color: white;
+  border-radius: 10px;
+  margin: 30px;
+  width: calc(100% - 260px);
+  max-width: 1250px;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+}
 
-    .sidebar ul {
-        list-style: none;
-        padding: 0;
-    }
+h1 {
+  font-size: 34px;
+  font-weight: bold;
+  color: var(--accent-color);
+  text-align: center;
+  margin-bottom: 25px;
+}
 
-    .sidebar li {
-        font-size: 14px;
-        margin: 8px 0;
-        cursor: pointer;
-    }
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 25px;
+  margin: 20px 0;
+}
 
-    .sidebar .admin-info {
-        margin-top: auto;
-        font-size: 14px;
-        font-weight: bold;
-    }
+.card {
+  background: var(--card-bg);
+  padding: 25px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+  border-left: 6px solid var(--accent-color);
+  transition: all 0.3s ease-in-out;
+}
 
-        .sidebar .admin-info span {
-            font-size: 12px;
-            display: block;
-            color: gray;
-        }
+.card:hover {
+  transform: translateY(-5px);
+  background: var(--accent-color);
+  color: white;
+}
 
-.room-container {
+.warning {
+  border-left-color: var(--warning-color);
+}
+
+.system-health {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 25px;
+  background: white;
+  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  text-align: center;
+}
+
+.system-health th, .system-health td {
+  padding: 18px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.system-health th {
+  background: var(--accent-color);
+  color: white;
+  font-size: 18px;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+.add-sensor, .add-machine {
+  border: none;
+  padding: 12px 18px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  transition: 0.3s ease-in-out;
+}
+
+.add-sensor {
+  background: var(--success-color);
+}
+
+.add-machine {
+  background: var(--accent-color);
+}
+
+.add-sensor:hover, .add-machine:hover {
+  opacity: 0.8;
+}
+
+@media screen and (max-width: 1024px) {
+  .cards {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .main-content {
     padding: 20px;
-    font-family: Arial, sans-serif;
-    color: #333;
+    margin: 15px;
   }
-  
-  .breadcrumb {
-    font-size: 14px;
-    color: #777;
-    margin-bottom: 20px;
-  }
-  
-  h1 {
-    font-size: 28px;
-    margin-bottom: 20px;
-  }
-  
-  /* Sensor Overview */
-  .sensor-overview {
-    display: flex;
+
+  .cards {
+    grid-template-columns: repeat(2, 1fr);
     gap: 15px;
-    margin-bottom: 30px;
   }
-  
-  .sensor-card {
-    flex: 1;
-    padding: 15px;
-    border-radius: 8px;
-    background: #f6f6f9;
-    text-align: center;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-  }
-  
-  .sensor-card h3 {
-    font-size: 16px;
-    color: #777;
-  }
-  
-  .sensor-card h2 {
-    font-size: 20px;
-    margin: 5px 0;
-  }
-  
-  .sensor-card p {
+
+  .system-health th, .system-health td {
+    padding: 10px;
     font-size: 14px;
-    color: #555;
   }
-  
-  /* Sensors Table */
-  .sensor-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-bottom: 30px;
-  }
-  
-  .sensor-table th, .sensor-table td {
-    padding: 12px;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .sensor-table th {
-    text-align: left;
-    background: #f4f4f4;
-  }
-  
-  /* Machines List */
-  .machines-list {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    margin-bottom: 20px;
-  }
-  
-  .machine-card {
-    background: #f6f6f9;
-    padding: 12px;
-    border-radius: 5px;
-    box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
-  }
-  
-  .machine-card h3 {
-    margin: 0;
-    font-size: 16px;
-  }
-  
-  .machine-card p {
-    font-size: 14px;
-    color: #777;
-  }
-  
-  /* Buttons */
+
   .button-container {
-    display: flex;
-    gap: 10px;
+    flex-direction: column;
+    align-items: center;
   }
-  
+
   .add-sensor, .add-machine {
-    border: none;
-    padding: 10px 15px;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 14px;
+    width: 100%;
+    text-align: center;
   }
-  
-  .add-sensor {
-    background: #6a5acd;
-    color: white;
+}
+
+@media screen and (max-width: 480px) {
+  .cards {
+    grid-template-columns: 1fr;
   }
-  
-  .add-machine {
-    background: #8a7fd1;
-    color: white;
+
+  .system-health {
+    font-size: 12px;
   }
+
+  .main-content {
+    padding: 10px;
+  }
+}
