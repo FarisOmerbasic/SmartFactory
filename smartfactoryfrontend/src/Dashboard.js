@@ -115,29 +115,20 @@ const Dashboard = () => {
         <div className="dashboard-container">
             <Menu />
             <main className="main-content">
-                <h1>Overview</h1>
                 
-                {/* Cards */}
+            <div className="header-container">
+                    <h1>Real-time Production Metrics</h1>
+                </div>
                 <div className="cards">
                     <div className="card">
-                        <p>Production Rate</p>
-                        <h2>98.5%</h2>
-                        <small>2% increase from last week</small>
+                        <p>Today's Projected Output</p>
+                        <h2>{productionData.lineA.todaysProjectedOutput || 0} units</h2>
+                        <small>{productionData.lineA.todaysProjectedOutput ? `${(productionData.lineA.todaysProjectedOutput / 2150 * 100).toFixed(2)}%` : '0%'} of target</small>
                     </div>
                     <div className="card">
-                        <p>Energy Efficiency</p>
-                        <h2>85%</h2>
-                        <small>Carbon neutral operations</small>
-                    </div>
-                    <div className="card">
-                        <p>Alerts</p>
-                        <h2>3 Active</h2>
-                        <small>2 high priority</small>
-                    </div>
-                    <div className="card">
-                        <p>Maintenance</p>
-                        <h2>4 Scheduled</h2>
-                        <small>Next in 2 days</small>
+                        <p>Week's Projection</p>
+                        <h2>{productionData.lineA.weeksProjection || 0} units</h2>
+                        <small>{productionData.lineA.weeksProjection ? `${(productionData.lineA.weeksProjection / 10500 * 100).toFixed(2)}%` : '0%'} of target</small>
                     </div>
                 </div>
         <h1>Current Energy Usage</h1>
@@ -160,21 +151,7 @@ const Dashboard = () => {
           </div>
         </div>      
 
-        <div className="header-container">
-                    <h1>Real-time Production Metrics</h1>
-                </div>
-                <div className="cards">
-                    <div className="card">
-                        <p>Today's Projected Output</p>
-                        <h2>{productionData.lineA.todaysProjectedOutput || 0} units</h2>
-                        <small>{productionData.lineA.todaysProjectedOutput ? `${(productionData.lineA.todaysProjectedOutput / 2150 * 100).toFixed(2)}%` : '0%'} of target</small>
-                    </div>
-                    <div className="card">
-                        <p>Week's Projection</p>
-                        <h2>{productionData.lineA.weeksProjection || 0} units</h2>
-                        <small>{productionData.lineA.weeksProjection ? `${(productionData.lineA.weeksProjection / 10500 * 100).toFixed(2)}%` : '0%'} of target</small>
-                    </div>
-                </div>
+        
 
             </main>
         </div>
