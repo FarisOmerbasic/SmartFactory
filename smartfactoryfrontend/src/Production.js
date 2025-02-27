@@ -7,7 +7,12 @@ const Production = () => {
         <div className="dashboard-container">
             <Menu /> 
             <main className="main-content">
-                <h1>Real-time Production Metrics</h1>
+                
+                {/* Header with Button */}
+                <div className="header-container">
+                    <h1>Real-time Production Metrics</h1>
+                    <button className="report-btn">Generate Detailed Report</button>
+                </div>
 
                 <div className="cards">
                     <div className="card">
@@ -72,7 +77,6 @@ const Production = () => {
                     </div>
                 </div>
 
-                <button className="report-btn">Generate Detailed Report</button>
             </main>
         </div>
     );

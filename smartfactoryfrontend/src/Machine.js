@@ -22,25 +22,25 @@ const Machine = () => {
     <div className="dashboard-container">
       <Menu /> 
       <main className="main-content">
-        <h1>Machine Status Overview</h1>
+        <h1 color="darkblue">Machine Status Overview</h1>
 
         <div className="cards">
-          <div className="card">
+          <div className="card-run">
             <CircleCheck className="icon green" size={24} />
             <p>Running</p>
             <h2>{statusCount.Running}</h2>
           </div>
-          <div className="card">
+          <div className="card-warn">
             <CircleAlert className="icon yellow" size={24} />
             <p>Warning</p>
             <h2>{statusCount.Warning}</h2>
           </div>
-          <div className="card">
+          <div className="card-crit">
             <AlertTriangle className="icon red" size={24} />
             <p>Critical</p>
             <h2>{statusCount.Critical}</h2>
           </div>
-          <div className="card">
+          <div className="card-idle">
             <PauseCircle className="icon gray" size={24} />
             <p>Idle</p>
             <h2>{statusCount.Idle}</h2>
