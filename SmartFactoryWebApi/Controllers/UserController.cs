@@ -5,7 +5,7 @@ using SmartFactoryWebApi.InMemoryRepositories;
 using SmartFactoryWebApi.Models;
 
 namespace SmartFactoryWebApi.Controllers
-{
+{  
     [Route("api/[controller]")]
     [ApiController]
     public class UserController : ControllerBase
