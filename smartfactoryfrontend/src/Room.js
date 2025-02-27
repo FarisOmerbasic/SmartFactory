@@ -1,37 +1,65 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Menu from "./menu"; 
 import "./Room.css";
 
 const Room = () => {
+  const [sensors, setSensors] = useState([]);
+  const [rooms, setRooms] = useState([]);
+  const [currentRoomIndex, setCurrentRoomIndex] = useState(0);
+  const [currentRoomData, setCurrentRoomData] = useState(null);
+
+  // Fetch devices for the selected room
+  const fetchSensors = async (roomName) => {
+    try {
+      const response = await fetch(`http://localhost:5270/api/Device/GetDevicesByRoomName?roomName=${roomName}`);
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      setSensors(data);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
+
+  // Fetch categories to get rooms with categoryNumber 1
+  const fetchCategories = async () => {
+    try {
+      const response = await fetch("http://localhost:5270/api/Category/GetAllCategories");
+      const data = await response.json();
+      const filteredRooms = data
+        .filter(category => category.categoryNumber === 1)
+        .flatMap(category => category.categoryNames);
+      setRooms(filteredRooms);
+    } catch (error) {
+      console.error("Error fetching categories:", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
+  useEffect(() => {
+    if (rooms.length > 0) {
+      fetchSensors(rooms[currentRoomIndex]); // Fetch sensors for the current room
+    }
+  }, [currentRoomIndex, rooms]);
+
+  const nextRoom = () => {
+    setCurrentRoomIndex((prevIndex) => (prevIndex + 1) % rooms.length);
+  };
+
+  const prevRoom = () => {
+    setCurrentRoomIndex((prevIndex) => (prevIndex - 1 + rooms.length) % rooms.length);
+  };
+
   return (
     <div className="dashboard-container">
       <Menu /> 
       <main className="main-content">
         <div className="room-container">
-          <h1>Production Room A</h1>
-
-          <div className="cards">
-            <div className="card">
-              <p>🌡 Temperature</p>
-              <h2>24.5°C</h2>
-              <small>Normal operating range</small>
-            </div>
-            <div className="card">
-              <p>💧 Humidity</p>
-              <h2>45%</h2>
-              <small>Within acceptable limits</small>
-            </div>
-            <div className="card">
-              <p>🌬 Air Quality</p>
-              <h2>Good</h2>
-              <small>CO2: 650 ppm</small>
-            </div>
-            <div className="card">
-              <p>🔊 Noise Level</p>
-              <h2>68 dB</h2>
-              <small>Normal production noise</small>
-            </div>
-          </div>
+          <h1>{rooms[currentRoomIndex]}</h1>
 
           <h2>Sensors</h2>
           <table className="system-health">
@@ -44,66 +72,24 @@ const Room = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>📡 Temperature Sensor</td>
-                <td>24.5°C</td>
-                <td className="success">Active</td>
-                <td>2 min ago</td>
-              </tr>
-              <tr>
-                <td>📡 Humidity Sensor</td>
-                <td>45%</td>
-                <td className="success">Active</td>
-                <td>2 min ago</td>
-              </tr>
-              <tr>
-                <td>📡 Air Quality Sensor</td>
-                <td>650 ppm</td>
-                <td className="success">Active</td>
-                <td>3 min ago</td>
-              </tr>
-              <tr>
-                <td>📡 Noise Level Sensor</td>
-                <td>68 dB</td>
-                <td className="success">Active</td>
-                <td>1 min ago</td>
-              </tr>
-              <tr>
-                <td>📡 Motion Sensor</td>
-                <td>No motion</td>
-                <td className="success">Active</td>
-                <td>5 min ago</td>
-              </tr>
+              {sensors.map(sensor => (
+                <tr key={sensor.id}>
+                  <td>📡 {sensor.name}</td>
+                  <td>{sensor.numericValue} {sensor.unit || 'N/A'}</td>
+                  <td className={sensor.isActive ? "success" : "danger"}>
+                    {sensor.isActive ? "Active" : "Inactive"}
+                  </td>
+                  <td>{new Date().toLocaleTimeString()}</td>
+                </tr>
+              ))}
             </tbody>
           </table>
-
-          <h2>Machines</h2>
-          <div className="cards">
-            <div className="card">
-              <p>⚙ Assembly Line A1</p>
-              <h2>92% Efficiency</h2>
-              <small>Operating normally</small>
-            </div>
-            <div className="card">
-              <p>📦 Packaging Unit P3</p>
-              <h2>87% Efficiency</h2>
-              <small>Running smoothly</small>
-            </div>
-            <div className="card warning">
-              <p>🔍 Quality Control Scanner</p>
-              <h2>Idle</h2>
-              <small>Scheduled maintenance</small>
-            </div>
-            <div className="card">
-              <p>🤖 Robotic Arm R2</p>
-              <h2>95% Efficiency</h2>
-              <small>Operating at peak performance</small>
-            </div>
-          </div>
 
           <div className="button-container">
             <button className="add-sensor">Add Sensor</button>
             <button className="add-machine">Add Machine</button>
+            <button onClick={prevRoom}>Previous Room</button>
+            <button onClick={nextRoom}>Next Room</button>
           </div>
         </div>
       </main>

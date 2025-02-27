@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Menu from "./menu"; 
 import "./Maintenance.css";
 
@@ -8,19 +8,26 @@ const alerts = [
   { priority: "Low", issue: "Belt Tension", description: "Conveyor #2 belt tension below optimal.", action: "Add to Schedule" }
 ];
 
-const maintenanceHistory = [
-  { machine: "🔧 CNC Machine #2", task: "Bearing Replacement", cost: "$2,400", downtime: "12h Downtime", status: "Completed" },
-  { machine: "🔧 Assembly Line A", task: "Motor Overhaul", cost: "$3,800", downtime: "24h Downtime", status: "Completed" },
-  { machine: "🔧 Conveyor #1", task: "Belt Replacement", cost: "$1,200", downtime: "6h Downtime", status: "Completed" }
-];
-
-const scheduledMaintenance = [
-  { title: "CNC Machine #3 Bearing Service", schedule: "Tomorrow, 8:00 AM - Expected duration: 4h" },
-  { title: "Assembly Line B Motor Check", schedule: "Next Week, Tuesday - Expected duration: 2h" },
-  { title: "Conveyor #2 Belt Inspection", schedule: "Next Week, Friday - Expected duration: 1h" }
-];
-
 const Maintenance = () => {
+  const [scheduledMaintenance, setScheduledMaintenance] = useState([]);
+
+  useEffect(() => {
+    const fetchScheduledMaintenance = async () => {
+      try {
+        const response = await fetch("http://localhost:5270/api/ScheduledMaintenance/ScheduledMaintenance");
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        const data = await response.json();
+        setScheduledMaintenance(data.scheduled);
+      } catch (error) {
+        console.error("Error fetching scheduled maintenance:", error);
+      }
+    };
+
+    fetchScheduledMaintenance();
+  }, []);
+
   return (
     <div className="dashboard-container">
       <Menu /> 
@@ -39,40 +46,18 @@ const Maintenance = () => {
           ))}
         </div>
 
-        <h2>Maintenance History</h2>
-        <div className="table-container">
-          <table className="system-health">
-            <thead>
-              <tr>
-                <th>Machine</th>
-                <th>Maintenance</th>
-                <th>Cost</th>
-                <th>Downtime</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {maintenanceHistory.map((record, index) => (
-                <tr key={index}>
-                  <td>{record.machine}</td>
-                  <td>{record.task}</td>
-                  <td>{record.cost}</td>
-                  <td>{record.downtime}</td>
-                  <td className="completed">{record.status}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-
         <h2>Scheduled Maintenance</h2>
         <div className="scheduled-list">
-          {scheduledMaintenance.map((item, index) => (
-            <div key={index} className="scheduled-item">
-              <h3>{item.title}</h3>
-              <p>{item.schedule}</p>
-            </div>
-          ))}
+          {scheduledMaintenance.length > 0 ? (
+            scheduledMaintenance.map((item, index) => (
+              <div key={index} className="scheduled-item">
+                <h3>{item.machine} - {item.task}</h3>
+                <p>{item.scheduledTime} - Expected duration: {item.expectedDuration}</p>
+              </div>
+            ))
+          ) : (
+            <p>Loading scheduled maintenance...</p>
+          )}
         </div>
       </main>
     </div>
