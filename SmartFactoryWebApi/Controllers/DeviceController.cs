@@ -195,17 +195,9 @@ namespace SmartFactoryWebApi.Controllers
         private static string DetermineThreshold(double value, JsonTestResponse threshold)
         {
 
-            if (value <= threshold.CriticalLowThreshold) return "Critical Low";
-
-            if (value <= threshold.NormalLowThreshold) return "Normal Low";
-
-            if (value <= threshold.WarningLowThreshold) return "Warning Low";
-
-            if (value >= threshold.NormalHighThreshold) return "Normal High";
-
-            if (value >= threshold.WarningHighThreshold) return "Warning High";
-
-            if (value >= threshold.CriticalHighThreshold) return "Critical High";
+            if (value >= threshold.NormalLowThreshold && value <= threshold.NormalHighThreshold) return "Normal";
+            if (value >= threshold.WarningLowThreshold && value <= threshold.WarningHighThreshold) return "Warning";
+            if (value >= threshold.CriticalLowThreshold && value >= threshold.CriticalHighThreshold) return "Critical";
 
             return "Normal";
         }
