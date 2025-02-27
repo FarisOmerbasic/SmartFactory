@@ -66,11 +66,11 @@
       "lowerBound": 0,
       "upperBound": 10,
       "criticalLowThreshold": -1,
-      "normalLowThreshold": -2.5,
-      "normalHighThreshold": 12.5,
+      "normalLowThreshold": -5.0,
+      "normalHighThreshold": 14.0,
       "criticalHighThreshold": 11,
-      "WarningLowThreshold": -1.75,
-      "WarningHighThreshold": 11.25
+      "WarningLowThreshold": 22.0,
+      "WarningHighThreshold": 44.0
     },
     {
       "id": "8",

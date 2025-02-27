@@ -3,6 +3,8 @@ using Newtonsoft.Json.Linq;
 using SmartFactoryBackend.Models;
 using SmartFactoryWebApi.Dtos;
 using SmartFactoryWebApi.Services;
+using SmartFactoryWebApi;
+using System.Runtime.CompilerServices;
 
 namespace SmartFactoryWebApi.Controllers
 {
@@ -111,6 +113,54 @@ namespace SmartFactoryWebApi.Controllers
             if (result.Count <= 0) return BadRequest($"No devices registered in {roomName}");
 
             return result;
+        }
+
+
+        [HttpPut("UpdateDeviceThreshold")]
+        public  ActionResult UpdateThresholdValue([FromBody] UpdateThresholdDto requset)
+        {
+
+            string jsonFilePath = "C:\\Users\\Emin Brankovic\\Desktop\\Coding Battle\\SmartFactory\\SmartFactoryWebApi\\threshold.json";
+            JsonFileHandler jsonHandler = new JsonFileHandler(jsonFilePath);
+
+            double criticalLowThreshold;
+            double normalLowThreshold;
+            double normalHighThreshold;
+            double criticalHighThreshold;
+            double WarningLowThreshold;
+            double WarningHighThreshold;
+
+            int errorCode;
+
+            switch (requset.Type)
+            {
+                case ThresholdTypes.Normal:
+                    normalHighThreshold = requset.UpperBound;
+                    normalLowThreshold=requset.LowerBound;
+                    errorCode=jsonHandler.UpdateJson(requset.DeviceId.ToString(),nameof(normalHighThreshold), normalHighThreshold, nameof(normalLowThreshold), normalLowThreshold);
+                    if (errorCode != 0)
+                        return BadRequest("Error updating threshold");
+                    break;
+                case ThresholdTypes.Warning:
+                    WarningHighThreshold=requset.UpperBound;
+                    WarningLowThreshold = requset.LowerBound;
+                    errorCode = jsonHandler.UpdateJson(requset.DeviceId.ToString(),nameof(WarningHighThreshold), WarningHighThreshold, nameof(WarningLowThreshold), WarningLowThreshold);
+                    if(errorCode!=0)
+                        return BadRequest("Error updating threshold");
+                    break;
+                case ThresholdTypes.Critical:
+                    criticalHighThreshold= requset.UpperBound;
+                    criticalLowThreshold = requset.LowerBound;
+                    errorCode = jsonHandler.UpdateJson(requset.DeviceId.ToString(),nameof(criticalHighThreshold), criticalHighThreshold, nameof(criticalLowThreshold), criticalLowThreshold);
+                    if (errorCode != 0)
+                        return BadRequest("Error updating threshold");
+                    break;
+                default:
+                    break;
+            }
+
+
+            return Ok("Threshold updated");
         }
 
 
