@@ -65,12 +65,12 @@
       "name": "QualityControl Vibration",
       "lowerBound": 0,
       "upperBound": 10,
-      "criticalLowThreshold": -2,
-      "normalLowThreshold": -3,
-      "normalHighThreshold": 13,
-      "criticalHighThreshold": 12,
-      "WarningLowThreshold": -2.5,
-      "WarningHighThreshold": 11.5
+      "criticalLowThreshold": -1,
+      "normalLowThreshold": -5.0,
+      "normalHighThreshold": 14.0,
+      "criticalHighThreshold": 11,
+      "WarningLowThreshold": 22.0,
+      "WarningHighThreshold": 44.0
     },
     {
       "id": "8",
