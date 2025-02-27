@@ -6,7 +6,6 @@
   --warning-color: #FF6B6B;
   --info-color: #6AB7FF;
 }
-
 .dashboard-container {
   display: flex;
   height: 100%;
@@ -15,158 +14,140 @@
   color: var(--text-color);
   width: 100vw;
 }
-
 .main-content {
   flex: 1;
-  padding: 50px;  
+  padding: 50px;
   overflow-y: auto;
   background-color: white;
   box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
-  border-radius: 12px; 
-  margin: 30px auto;  
+  border-radius: 12px;
+  margin: 30px auto;
   width: calc(100% - 250px);
-  max-width: 1300px; 
+  max-width: 1300px;
 }
-
 h1 {
   font-size: 36px;
   font-weight: bold;
   color: var(--accent-color);
   text-align: center;
-  margin-bottom: 30px; 
+  margin-bottom: 30px;
 }
-
 .cards {
   display: flex;
-  justify-content: space-between; 
-  gap: 30px; 
+  justify-content: space-between;
+  gap: 30px;
   margin: 30px 0;
 }
-
 .card {
   flex: 1;
   background: white;
-  padding: 25px; 
-  border-radius: 12px; 
+  padding: 25px;
+  border-radius: 12px;
   text-align: center;
   box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.1);
   transition: 0.3s;
   color: var(--text-color);
   border-left: 6px solid var(--accent-color);
-  min-height: 170px; 
+  min-height: 170px;
 }
 .card-crit:hover, .card-warn:hover, .card-idle:hover,.card-run:hover {
   filter: brightness(90%);
 }
-
 .card-crit {
   flex: 1;
   background: #FFB6B6;
-  padding: 25px; 
-  border-radius: 12px; 
+  padding: 25px;
+  border-radius: 12px;
   text-align: center;
   box-shadow: red;
   transition: 0.3s;
   color: var(--text-color);
   border-left: 6px solid red;
-  min-height: 170px; 
+  min-height: 170px;
 }
 .card-run {
   flex: 1;
   background:#B6FFC2;
-  padding: 25px; 
-  border-radius: 12px; 
+  padding: 25px;
+  border-radius: 12px;
   text-align: center;
   box-shadow: green;
   transition: 0.3s;
   color: var(--text-color);
   border-left: 6px solid green;
-  min-height: 170px; 
+  min-height: 170px;
 }
 .card-warn{
   flex: 1;
   background: #FFEAB6;
-  
-  padding: 25px; 
-  border-radius: 12px; 
+  padding: 25px;
+  border-radius: 12px;
   text-align: center;
   box-shadow: orange;
   transition: 0.3s;
   color: var(--text-color);
   border-left: 6px solid orange;
-  min-height: 170px; 
+  min-height: 170px;
 }
 .card-idle {
   flex: 1;
   background:  #DEDEDE;
-  padding: 25px; 
-  border-radius: 12px; 
+  padding: 25px;
+  border-radius: 12px;
   text-align: center;
   box-shadow: grey;
   transition: 0.3s;
   color: var(--text-color);
   border-left: 6px solid grey;
-  min-height: 170px; 
+  min-height: 170px;
 }
-
 .card:hover {
   transform: translateY(-5px);
   background: var(--accent-color);
   color: white;
 }
-
 .card button {
   display: block;
   width: 80%;
   margin: 0 auto;
 }
-
 .high-priority {
   border-left-color: var(--warning-color);
 }
-
 .medium-priority {
   border-left-color: var(--info-color);
 }
-
 .low-priority {
   border-left-color: var(--success-color);
 }
-
 .high-btn {
   background: var(--warning-color);
 }
-
 .medium-btn {
-  background: var(--info-color);
+  background: transparent;
 }
-
 .low-btn {
-  background: var(--success-color);
+  background: transparent;
 }
-
 button {
   border: none;
-  padding: 12px 16px; 
+  padding: 12px 16px;
   border-radius: 6px;
   color: white;
   font-size: 15px;
-  margin-top: 15px; 
+  margin-top: 15px;
   cursor: pointer;
   transition: 0.3s;
 }
-
 button:hover {
   opacity: 0.8;
 }
-
 .table-container {
   width: 100%;
   overflow-x: auto;
   margin-top: 20px;
   margin-bottom: 20px;
 }
-
 .system-health {
   width: 100%;
   border-collapse: collapse;
@@ -177,69 +158,116 @@ button:hover {
   border-radius: 12px;
   text-align: center;
 }
-
 .system-health th, .system-health td {
-  padding: 18px; 
+  padding: 18px;
   border: 1px solid #ddd;
   text-align: center;
 }
-
 .system-health th {
   background: var(--accent-color);
   color: white;
   font-size: 18px;
 }
-
 .scheduled-list {
   display: flex;
   flex-direction: column;
   gap: 15px;
   margin-top: 30px;
 }
-
 .scheduled-item {
-  background: #f6f6f9;
-  padding: 20px; 
+  background: #F6F6F9;
+  padding: 20px;
   border-radius: 8px;
   box-shadow: 3px 3px 6px rgba(0, 0, 0, 0.1);
 }
-
 .scheduled-item h3 {
   font-size: 18px;
 }
-
 .scheduled-item p {
   font-size: 16px;
   color: #777;
 }
-
 @media screen and (max-width: 1024px) {
   .cards {
     flex-direction: column;
     gap: 20px;
   }
 }
-
 @media screen and (max-width: 768px) {
   .main-content {
     padding: 30px;
   }
-
   .cards {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
-
   .table-container {
     overflow-x: auto;
   }
 }
-
 @media screen and (max-width: 480px) {
   .cards {
     grid-template-columns: 1fr;
   }
-
   .main-content {
     padding: 20px;
   }
+}
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+.modal h2 {
+  margin-bottom: 15px;
+}
+.modal label {
+  display: block;
+  margin-top: 10px;
+}
+.modal input {
+  width: 100%;
+  padding: 5px;
+  margin-top: 5px;
+}
+.modal-actions {
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+.confirm-btn {
+  background: green;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  cursor: pointer;
+}
+.cancel-btn {
+  background: red;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  cursor: pointer;
+}
+.success-message {
+  background: #4CAF50;
+  color: white;
+  padding: 10px;
+  margin: 10px 0;
+  text-align: center;
+  font-weight: bold;
+  border-radius: 5px;
+  animation: fadeIn 0.5s ease-in-out;
 }
