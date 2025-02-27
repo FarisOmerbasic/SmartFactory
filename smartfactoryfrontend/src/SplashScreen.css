@@ -1,0 +1,86 @@
+:root {
+    --primary-bg: #F0F4F8; /* Light Gray-Blue */
+    --accent-color: #3A86FF; /* Bright Blue */
+    --text-color: #1D3557; /* Dark Navy */
+}
+
+/* ss layout */
+.splash-screen {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--primary-bg);
+    text-align: center;
+    animation: fadeIn 1.5s ease-in-out; /* Smooth fade-in */
+}
+
+.splash-logo {
+    width: 512px;  
+    height: 512px;
+    opacity: 0;
+    animation: slideIn 1.5s ease-in-out forwards; 
+}
+
+.splash-text {
+    font-size: 48px; 
+    font-weight: bold;
+    font-family: "Dancing Script", cursive;
+    color: var(--accent-color);
+    margin-top: 20px;
+    opacity: 0;
+    animation: fadeInText 2s ease-in-out 0.5s forwards; /* Delayed fade-in */
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+@keyframes fadeInText {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .splash-logo {
+        width: 300px;  
+        height: 300px;
+    }
+
+    .splash-text {
+        font-size: 36px;  
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .splash-logo {
+        width: 200px;
+        height: 200px;
+    }
+
+    .splash-text {
+        font-size: 28px;
+    }
+}

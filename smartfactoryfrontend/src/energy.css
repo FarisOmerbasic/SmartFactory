@@ -1,91 +1,155 @@
+:root {
+  --primary-bg: #F0F4F8;
+  --sidebar-bg: #DCE6F1;
+  --accent-color: #3A86FF;
+  --text-color: #1D3557;
+  --success-color: #2ECC71;
+  --warning-color: #FF6B6B;
+  --info-color: #6AB7FF;
+}
+
 .energy-page {
-    display: flex;
-    font-family: Arial, sans-serif;
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  font-family: "Poppins", Arial, sans-serif;
+  background-color: var(--primary-bg);
+}
+
+.main-content {
+  flex-grow: 1;
+  padding: 30px;
+  background: white;
+  border-radius: 12px;
+  margin: 20px;
+  box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.1);
+  overflow-y: auto;
+  height: calc(100vh - 40px);
+  width: calc(100vw - 280px);
+}
+
+.status-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  margin-top: 30px;
+  padding-bottom: 10px;
+}
+
+.card {
+  background: white;
+  padding: 25px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 2px 2px 12px rgba(0, 0, 0, 0.1);
+  transition: 0.3s;
+  min-width: 250px;
+  border-left: 6px solid var(--accent-color);
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  background: var(--accent-color);
+  color: white;
+}
+
+.card h2 {
+  font-size: 26px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 30px;
+  padding-bottom: 10px;
+}
+
+.energy-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 10px;
+}
+
+.energy-table th, .energy-table td {
+  border: 1px solid #ddd;
+  padding: 14px;
+  text-align: left;
+}
+
+.energy-table th {
+  background: var(--accent-color);
+  color: white;
+  font-size: 18px;
+}
+
+.suggestions {
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+  padding-bottom: 10px;
+}
+
+.suggestion {
+  background: #eef;
+  padding: 18px;
+  border-radius: 10px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.suggestion.warning {
+  background: #ffe5e5;
+}
+
+@media screen and (max-width: 1024px) {
+  .energy-page {
+    flex-direction: column;
+    padding: 15px;
   }
-  
-  .sidebar {
-    width: 250px;
-    background: #f8f9fa;
-    padding: 20px;
-    min-height: 100vh;
-  }
-  
-  .sidebar h2 {
-    font-size: 22px;
-    margin-bottom: 20px;
-  }
-  
-  .sidebar ul {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .sidebar ul li {
-    padding: 10px;
-    cursor: pointer;
-  }
-  
-  .sidebar ul .active {
-    font-weight: bold;
-    color: #6c63ff;
-  }
-  
-  .user-info {
-    margin-top: 50px;
-    font-size: 14px;
-    color: #666;
-  }
-  
+
   .main-content {
-    flex-grow: 1;
-    padding: 20px;
-  }
-  
-  .status-cards {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 24px;
-  }
-  
-  .card {
-    background: #f4f4f4;
-    padding: 16px;
-    border-radius: 8px;
-    text-align: center;
-    flex: 1;
-  }
-  
-  .energy-table {
     width: 100%;
-    border-collapse: collapse;
-    margin-top: 16px;
+    padding: 25px;
+    margin: 0;
   }
-  
+
+  .status-cards {
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .status-cards {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+
+  .table-container {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
   .energy-table th, .energy-table td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
-  }
-  
-  .energy-table th {
-    background: #f0f0f0;
-  }
-  
-  .increase { color: green; }
-  .decrease { color: red; }
-  
-  .suggestions {
-    margin-top: 20px;
-  }
-  
-  .suggestion {
-    background: #eef;
     padding: 12px;
-    border-radius: 8px;
-    margin-bottom: 10px;
+    font-size: 16px;
   }
-  
-  .suggestion.warning {
-    background: #ffe5e5;
+}
+
+@media screen and (max-width: 480px) {
+  .status-cards {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
-  
+
+  .main-content {
+    padding: 15px;
+  }
+
+  .energy-table {
+    font-size: 14px;
+  }
+}

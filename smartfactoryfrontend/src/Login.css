@@ -1,7 +1,5 @@
-/* Import Google Font */
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Dancing+Script:wght@400;600&display=swap');
 
-/* Root Variables */
 :root {
   --primary-bg: #F0F4F8;
   --sidebar-bg: #DCE6F1;
@@ -12,11 +10,10 @@
   --info-color: #6AB7FF;
 }
 
-/* Background Styling */
 body {
   background: url("./assets/loginImgs/background.png") no-repeat center center/cover;
-  background-size: cover; /* Ensures the image scales properly */
-  background-attachment: fixed; 
+  background-size: cover;
+  background-attachment: fixed;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,7 +23,6 @@ body {
   color: var(--text-color);
 }
 
-/* Login Container */
 .login-container {
   display: flex;
   flex-direction: column;
@@ -34,7 +30,6 @@ body {
   text-align: center;
 }
 
-/* Title with cursive */
 .title {
   font-size: 28px;
   font-weight: 600;
@@ -44,7 +39,6 @@ body {
   letter-spacing: 1px;
 }
 
-/* Login Box */
 .login-box {
   background: rgba(255, 255, 255, 0.95);
   padding: 40px;
@@ -58,7 +52,6 @@ body {
   transform: translateY(-5px);
 }
 
-/* Welcome Message with emoji */
 .welcome {
   font-size: 24px;
   font-weight: 600;
@@ -67,16 +60,23 @@ body {
 }
 
 .welcome::after {
-  content: " 🚀"; /* Adds an emoji */
+  content: " 🚀"; 
 }
 
-/* Subtitle with italics */
 .subtitle {
   font-size: 16px;
   font-style: italic;
   font-weight: 400;
   color: gray;
   margin-bottom: 20px;
+}
+
+/* Error Message */
+.error-message {
+  color: var(--warning-color);
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 15px;
 }
 
 /* Input Fields */
@@ -94,7 +94,6 @@ body {
   color: var(--text-color);
 }
 
-/* Input Fields with Placeholder Styling */
 .input-group input {
   padding: 14px;
   border: 2px solid var(--sidebar-bg);
@@ -105,19 +104,13 @@ body {
   transition: 0.3s ease-in-out;
 }
 
-.input-group input::placeholder {
-  font-style: italic;
-  color: #888;
-}
-
 .input-group input:focus {
   outline: none;
   border-color: var(--accent-color);
   box-shadow: 0 0 8px rgba(58, 134, 255, 0.5);
 }
 
-/* Buttons */
-.login-btn, .admin-btn {
+.login-btn {
   width: 100%;
   padding: 14px;
   border: none;
@@ -127,9 +120,6 @@ body {
   cursor: pointer;
   transition: 0.3s ease-in-out;
   margin-top: 10px;
-}
-
-.login-btn {
   background-color: var(--accent-color);
   color: white;
 }
@@ -139,17 +129,6 @@ body {
   transform: scale(1.05);
 }
 
-.admin-btn {
-  background-color: var(--accent-color);
-  color: white;
-}
-
-.admin-btn:hover {
-  background-color: darkblue;
-  transform: scale(1.05);
-}
-
-/* Responsive Design */
 @media (max-width: 400px) {
   .login-box {
     width: 90%;

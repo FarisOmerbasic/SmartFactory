@@ -1,65 +1,40 @@
 import React from "react";
+import Menu from "./menu"; 
 import "./Room.css";
 
 const Room = () => {
   return (
     <div className="dashboard-container">
-      {/* Sidebar */}
-      <aside className="sidebar">
-        <h2>SmartFactory</h2>
-        <nav>
-          <h3>Dashboard</h3>
-          <ul>
-            <li>Users</li>
-            <li>Analytics</li>
-            <li>Settings</li>
-          </ul>
-          <h3>Production</h3>
-          <ul>
-            <li>Machines</li>
-            <li>Energy</li>
-            <li>Maintenance</li>
-          </ul>
-        </nav>
-        <div className="admin-info">
-          <p>Admin User</p>
-          <span>System Administrator</span>
-        </div>
-      </aside>
-
-      {/* Main content */}
+      <Menu /> 
       <main className="main-content">
         <div className="room-container">
-          {/* Room Header */}
           <h1>Production Room A</h1>
 
-          {/* Sensor Overview */}
-          <div className="sensor-overview">
-            <div className="sensor-card">
-              <h3>🌡 TEMPERATURE</h3>
+          <div className="cards">
+            <div className="card">
+              <p>🌡 Temperature</p>
               <h2>24.5°C</h2>
-              <p>Normal operating range</p>
+              <small>Normal operating range</small>
             </div>
-            <div className="sensor-card">
-              <h3>💧 HUMIDITY</h3>
+            <div className="card">
+              <p>💧 Humidity</p>
               <h2>45%</h2>
-              <p>Within acceptable limits</p>
+              <small>Within acceptable limits</small>
             </div>
-            <div className="sensor-card">
-              <h3>🌬 AIR QUALITY</h3>
+            <div className="card">
+              <p>🌬 Air Quality</p>
               <h2>Good</h2>
-              <p>CO2: 650 ppm</p>
+              <small>CO2: 650 ppm</small>
             </div>
-            <div className="sensor-card">
-              <h3>🔊 NOISE LEVEL</h3>
+            <div className="card">
+              <p>🔊 Noise Level</p>
               <h2>68 dB</h2>
-              <p>Normal production noise</p>
+              <small>Normal production noise</small>
             </div>
           </div>
 
-          {/* Sensors List */}
           <h2>Sensors</h2>
-          <table className="sensor-table">
+          <table className="system-health">
             <thead>
               <tr>
                 <th>Sensor</th>
@@ -72,58 +47,60 @@ const Room = () => {
               <tr>
                 <td>📡 Temperature Sensor</td>
                 <td>24.5°C</td>
-                <td>Active</td>
+                <td className="success">Active</td>
                 <td>2 min ago</td>
               </tr>
               <tr>
                 <td>📡 Humidity Sensor</td>
                 <td>45%</td>
-                <td>Active</td>
+                <td className="success">Active</td>
                 <td>2 min ago</td>
               </tr>
               <tr>
                 <td>📡 Air Quality Sensor</td>
                 <td>650 ppm</td>
-                <td>Active</td>
+                <td className="success">Active</td>
                 <td>3 min ago</td>
               </tr>
               <tr>
                 <td>📡 Noise Level Sensor</td>
                 <td>68 dB</td>
-                <td>Active</td>
+                <td className="success">Active</td>
                 <td>1 min ago</td>
               </tr>
               <tr>
                 <td>📡 Motion Sensor</td>
                 <td>No motion</td>
-                <td>Active</td>
+                <td className="success">Active</td>
                 <td>5 min ago</td>
               </tr>
             </tbody>
           </table>
 
-          {/* Machines List */}
           <h2>Machines</h2>
-          <div className="machines-list">
-            <div className="machine-card">
-              <h3>⚙ Assembly Line A1</h3>
-              <p>Operating at 92% efficiency</p>
+          <div className="cards">
+            <div className="card">
+              <p>⚙ Assembly Line A1</p>
+              <h2>92% Efficiency</h2>
+              <small>Operating normally</small>
             </div>
-            <div className="machine-card">
-              <h3>📦 Packaging Unit P3</h3>
-              <p>Operating at 87% efficiency</p>
+            <div className="card">
+              <p>📦 Packaging Unit P3</p>
+              <h2>87% Efficiency</h2>
+              <small>Running smoothly</small>
             </div>
-            <div className="machine-card">
-              <h3>🔍 Quality Control Scanner</h3>
-              <p>Idle - Scheduled maintenance</p>
+            <div className="card warning">
+              <p>🔍 Quality Control Scanner</p>
+              <h2>Idle</h2>
+              <small>Scheduled maintenance</small>
             </div>
-            <div className="machine-card">
-              <h3>🤖 Robotic Arm R2</h3>
-              <p>Operating at 95% efficiency</p>
+            <div className="card">
+              <p>🤖 Robotic Arm R2</p>
+              <h2>95% Efficiency</h2>
+              <small>Operating at peak performance</small>
             </div>
           </div>
 
-          {/* Buttons */}
           <div className="button-container">
             <button className="add-sensor">Add Sensor</button>
             <button className="add-machine">Add Machine</button>

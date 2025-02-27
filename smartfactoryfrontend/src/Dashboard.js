@@ -8,6 +8,8 @@ const Dashboard = () => {
             <Menu />
             <main className="main-content">
                 <h1>Overview</h1>
+                
+                {/* Cards */}
                 <div className="cards">
                     <div className="card">
                         <p>Production Rate</p>
@@ -30,6 +32,8 @@ const Dashboard = () => {
                         <small>Next in 2 days</small>
                     </div>
                 </div>
+
+                {/* Recent Activities */}
                 <h2>Recent Activities</h2>
                 <ul className="recent-activities">
                     <li>
@@ -45,6 +49,8 @@ const Dashboard = () => {
                         <p>Sarah Chen - Production Manager</p>
                     </li>
                 </ul>
+
+                {/* System Health */}
                 <h2>System Health</h2>
                 <table className="system-health">
                     <thead>

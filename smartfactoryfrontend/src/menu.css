@@ -1,68 +1,67 @@
-/* Root Variables for Color Palette */
 :root {
-    --primary-bg: #F0F4F8; /* Light Gray-Blue */
-    --sidebar-bg: #DCE6F1; /* Soft Sky Blue */
-    --accent-color: #3A86FF; /* Bright Blue */
-    --text-color: #1D3557; /* Dark Navy */
-    --success-color: #2ECC71; /* Green */
-    --warning-color: #FF6B6B; /* Red */
-    --info-color: #6AB7FF; /* Sky Blue */
+    --primary-bg: #F0F4F8;
+    --sidebar-bg: #DCE6F1;
+    --accent-color: #3A86FF;
+    --text-color: #1D3557;
+    --success-color: #2ECC71;
+    --warning-color: #FF6B6B;
+    --info-color: #6AB7FF;
 }
 
-/* Menu Layout */
 .menu {
-    width: 250px;
     background: var(--sidebar-bg);
-    padding: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
-    color: var(--text-color);
+    align-items: center;
+    width: 260px;  
+    min-height: 100vh;
+    padding: 20px;  
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    height: 100vh;
 }
 
 .menu h2 {
-    font-size: 22px;
+    font-size: 24px; 
     font-weight: bold;
-    text-align: center;
-    margin-top: 10px;
     color: var(--accent-color);
+    margin-bottom: 20px;
 }
 
-/* Logo */
 .logo-container {
     display: flex;
     justify-content: center;
     align-items: center;
+    width: 100%;
 }
 
 .logo {
-    width: 200px;
-    height: 200px;
+    width: 180px;
+    height: 180px;
 }
 
-/* Menu Items */
 .menu h3 {
-    font-size: 16px;
-    margin-top: 20px;
+    font-size: 18px;
     color: var(--accent-color);
+    margin-top: 20px;
+    width: 100%;
+    text-align: left;
 }
 
 .menu ul {
     list-style: none;
+    width: 100%;
     padding: 0;
+    margin: 0;
 }
 
 .menu li {
-    font-size: 14px;
+    font-size: 15px;
     margin: 8px 0;
-    cursor: pointer;
+    padding: 12px;
     display: flex;
     align-items: center;
-    padding: 10px;
-    border-radius: 5px;
+    border-radius: 8px;
     transition: 0.3s;
+    width: 100%;
 }
 
 .menu li:hover {
@@ -70,45 +69,149 @@
     color: white;
 }
 
-/* Icons in Menu */
+.menu li a {
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
 .menu-icon {
-    width: 20px;
-    height: 20px;
+    width: 22px;
+    height: 22px;
     margin-right: 10px;
 }
 
-/* Admin Info */
 .admin-info {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 15px;
+    text-align: center;
     background: var(--sidebar-bg);
     border-radius: 10px;
-    margin-top: 20px;
-    text-align: center;
+    padding: 15px;
+    margin-top: 30px;
+    width: calc(100% - 40px);
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* Admin Avatar */
 .admin-avatar {
     width: 60px;
     height: 60px;
     border-radius: 50%;
     margin-bottom: 10px;
     border: 3px solid var(--accent-color);
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+}
+p {
+    color:black;
+    font-size: 14px;
+  }
+.user-role {
+    font-size: 14px;
+    color: gray;
+    font-weight: normal;
+    margin-top: -5px;
 }
 
-/* Admin Text */
-.admin-info p {
+@media screen and (max-width: 1024px) {
+    .menu {
+        width: 220px;
+        padding: 15px;
+    }
+
+    .menu h2 {
+        font-size: 20px;
+    }
+
+    .menu ul {
+        width: 100%;
+    }
+
+    .menu li {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .menu {
+        width: 100%;
+        height: auto;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 15px;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+    }
+
+    .logo-container {
+        display: none;
+    }
+
+    .menu ul {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    .menu li {
+        font-size: 14px;
+        padding: 8px;
+    }
+
+    .admin-info {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .menu {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        padding: 10px;
+    }
+
+    .menu ul {
+        flex-direction: column;
+        align-items: center;
+        gap: 5px;
+    }
+
+    .menu-icon {
+        width: 18px;
+        height: 18px;
+    }
+}
+.logout-btn {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    cursor: pointer;
     font-size: 16px;
     font-weight: bold;
-    color: var(--text-color);
-    margin: 5px 0 2px 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin: 20px;
+    transition: 0.3s;
 }
 
-.admin-info span {
-    font-size: 12px;
-    color: gray;
+.logout-btn:hover {
+    background: darkblue;
+}
+
+@media screen and (max-width: 768px) {
+    .logout-btn {
+        width: 100%;
+        text-align: center;
+    }
 }
