@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Menu from "./menu"; 
+import Menu from "./menu";
 import "./Production.css";
 
 const Production = () => {
@@ -39,14 +39,47 @@ const Production = () => {
         fetchAllProductionData();
     }, []);
 
+    const generatePDF = async () => {
+        try {
+            const requestBody = {
+                lineA: [productionData.lineA],
+                lineB: [productionData.lineB],
+                lineC: [productionData.lineC],
+                todayOutput: productionData.lineA.todaysProjectedOutput || 0,
+                weekOutput: productionData.lineA.weeksProjection || 0
+            };
+
+            const response = await fetch("http://localhost:5270/api/PDFReport/GeneratePdf", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(requestBody),
+            });
+
+            if (!response.ok) {
+                throw new Error("Failed to generate PDF");
+            }
+
+            const blob = await response.blob();
+            const pdfUrl = URL.createObjectURL(blob);
+            window.open(pdfUrl);
+        } catch (error) {
+            console.error("Error generating PDF:", error);
+        }
+    };
+
     return (
         <div className="dashboard-container">
-            <Menu /> 
+            <Menu />
             <main className="main-content">
-            <div className="header-container">
+                <div className="header-container">
                     <h1>Real-time Production Metrics</h1>
-                    <button className="report-btn">Generate Detailed Report</button>
+                    <button className="report-btn" onClick={generatePDF}>
+                        Generate Detailed Report
+                    </button>
                 </div>
+
                 <div className="cards">
                     <div className="card">
                         <p>Today's Projected Output</p>
@@ -59,7 +92,7 @@ const Production = () => {
                         <small>{productionData.lineA.weeksProjection ? `${(productionData.lineA.weeksProjection / 10500 * 100).toFixed(2)}%` : '0%'} of target</small>
                     </div>
                 </div>
-                
+
                 <h2>Production Bottlenecks</h2>
                 <div className="table-container">
                     <table className="system-health">
