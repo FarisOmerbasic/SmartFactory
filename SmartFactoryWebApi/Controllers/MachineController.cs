@@ -105,7 +105,7 @@ namespace SmartFactoryWebApi.Controllers
 
         private List<JsonTestResponse>? ReadFromJson()
         {
-            string jsonFilePath = "C:\\Users\\Emin Brankovic\\Desktop\\Coding Battle\\SmartFactory\\SmartFactoryWebApi\\threshold.json";
+            string jsonFilePath = "C:\\Users\\Lenovo\\Source\\Repos\\SmartFactory\\SmartFactoryWebApi\\threshold.json";
             JsonFileHandler jsonHandler = new JsonFileHandler(jsonFilePath);
             JObject jsonData;
 

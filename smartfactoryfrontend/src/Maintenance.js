@@ -91,6 +91,11 @@ const Maintenance = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
+  const handleDelete = (index) => {
+    setScheduledMaintenance((prev) => prev.filter((_, i) => i !== index));
+  };
+  
+
   // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -170,6 +175,7 @@ const Maintenance = () => {
               <div key={index} className="scheduled-item">
                 <h3>{item.machine} - {item.task}</h3>
                 <p>{item.scheduledTime} - Expected duration: {item.expectedDuration}</p>
+                <button className="delete-btn" onClick={() => handleDelete(index)}>Delete</button>
               </div>
             ))
           ) : (
@@ -193,7 +199,7 @@ const Maintenance = () => {
               <input type="text" name="problem" value={formData.problem} onChange={handleInputChange} required />
               <div className="modal-actions">
                 <button type="submit" className="confirm-btn">Confirm</button>
-                <button type="button" className="cancel-btn" onClick={closeModal}>Cancel</button>
+                <button type="button" className="cancel" onClick={closeModal}>Cancel</button>
               </div>
             </form>
           </div>
