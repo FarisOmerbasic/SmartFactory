@@ -65,6 +65,17 @@ namespace SmartFactoryWebApi.Controllers
 
             return Ok(resoponse);
         }
+
+        [HttpDelete("removeUser/{id}")]
+        public ActionResult RemoveUser(int id)
+        {
+            var user=UserRepository.GetUserById(id);
+            if (user == null) return BadRequest("User not found");
+
+            UserRepository.RemoveUser(user);
+
+            return Ok("User removed");
+        }
     }
 
 }
