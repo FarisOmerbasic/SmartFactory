@@ -38,5 +38,10 @@ namespace SmartFactoryWebApi.InMemoryRepositories
             return Users;
         }
 
+        public static void RemoveUser(User user)
+        {
+            Users.Remove(user);
+        }
+
     }
 }
