@@ -153,6 +153,18 @@ namespace SmartFactoryWebApi.Controllers
 
         }
 
+        [HttpGet("GetThresholdById/{id}")]
+        public ActionResult<JsonTestResponse> GetThresholdById(int id)
+        {
+            var thresholds = ReadFromJson();
+
+            var stringId=id.ToString();
+
+            var threshold = thresholds.FirstOrDefault(t => t.Id == stringId);
+
+            return Ok(threshold);
+        }
+
 
 
         private List<JsonTestResponse>? ReadFromJson()
