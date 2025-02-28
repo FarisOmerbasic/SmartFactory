@@ -5,6 +5,7 @@ using SmartFactoryWebApi.Dtos;
 using SmartFactoryWebApi.Services;
 using SmartFactoryWebApi;
 using System.Runtime.CompilerServices;
+using SmartFactoryWebApi.Models;
 
 namespace SmartFactoryWebApi.Controllers
 {
@@ -87,14 +88,16 @@ namespace SmartFactoryWebApi.Controllers
                 {
                     sensor.CurrentThreshold = DetermineThreshold(sensor.NumericValue, threshold);
 
-                    if (sensor.CurrentThreshold == "Critical")
-                    {
-                        criticalCount++;
-                    }
-                    if (sensor.CurrentThreshold == "Warning")
-                    {
-                        warningCount++;
-                    }
+                    if (sensor.CurrentThreshold == "Critical High" || sensor.CurrentThreshold == "Critical Low")
+                        if (sensor.CurrentThreshold == "Critical")
+                        {
+                            criticalCount++;
+                        }
+                    if (sensor.CurrentThreshold == "Warning High" || sensor.CurrentThreshold == "Warning Low")
+                        if (sensor.CurrentThreshold == "Warning")
+                        {
+                            warningCount++;
+                        }
                 }
                 else
                 {
@@ -154,7 +157,7 @@ namespace SmartFactoryWebApi.Controllers
 
         private List<JsonTestResponse>? ReadFromJson()
         {
-            string jsonFilePath = "C:\\Users\\Emin Brankovic\\Desktop\\Coding Battle\\SmartFactory\\SmartFactoryWebApi\\threshold.json"; 
+            string jsonFilePath = "C:\\Users\\Lenovo\\Source\\Repos\\SmartFactory\\SmartFactoryWebApi\\threshold.json"; 
             JsonFileHandler jsonHandler = new JsonFileHandler(jsonFilePath);
             JObject jsonData;
 

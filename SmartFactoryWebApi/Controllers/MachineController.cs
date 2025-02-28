@@ -54,7 +54,7 @@ namespace SmartFactoryWebApi.Controllers
                 {
                     MachineName = machineNames[i],
                     Status = "Runing",
-                    UpTime = await GetUptime(machines[i], cancellationToken),
+                    UpTime = new Random().Next(70, 300),
                     Temperature = machines[i].NumericValue
                 }); ;
             }
@@ -137,21 +137,6 @@ namespace SmartFactoryWebApi.Controllers
             if (value >= threshold.CriticalLowThreshold && value >= threshold.CriticalHighThreshold) return "Critical";
 
             return "Normal";
-        }
-
-
-        private async Task<int> GetUptime(Sensor sensor, CancellationToken cancellationToken)
-        {
-            var id = int.Parse(sensor.Id);
-            var trending = await dataMinerConnection.GetDeviceTrending(id, cancellationToken);
-
-            var firstTime = trending[0].Time;
-
-            DateTime currentTime = DateTime.Now;
-            
-            int hoursDifference = (int)Math.Round((currentTime-firstTime).TotalHours);
-
-            return hoursDifference;
         }
 
 
