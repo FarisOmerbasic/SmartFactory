@@ -130,7 +130,7 @@ namespace SmartFactoryWebApi.Controllers
 
             jsonHandler.UpdateJson(requset);
 
-            return Ok("Threshold updated");
+            return Ok();
         }
 
         [HttpGet("GetCriticalAndWarningSensors")]

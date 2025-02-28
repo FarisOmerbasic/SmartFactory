@@ -247,21 +247,19 @@ button:hover {
   display: flex;
   justify-content: space-between;
 }
-.confirm-btn {
+.confirm-maint{
   background: green;
   color: white;
-  border: none;
-  padding: 8px 15px;
   cursor: pointer;
 }
-.cancel{
+
+.cancel-maint{
   background: red;
   color: white;
   border: none;
-  padding: 8px 15px;
-  cursor: pointer;
 }
-.cancel-btn,.delete-btn {
+
+.delete-btn {
   background: red;
   color: white;
   border: none;

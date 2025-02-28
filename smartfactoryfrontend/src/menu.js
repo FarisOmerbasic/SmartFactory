@@ -49,7 +49,7 @@ const Menu = () => {
                 </ul>
                 <ul>
                     { userRole === "Administrator" && 
-                        <li><Link to="/add-user"><img src={addUserIcon} alt="Add User" className="menu-icon" /> Add User</Link></li> }
+                        <li><Link to="/add-user"><img src={addUserIcon} alt="Add User" className="menu-icon" /> User Managment</Link></li> }
                 </ul>
             </nav>
             

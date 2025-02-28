@@ -331,12 +331,11 @@ button:hover {
 }
 /* Oval Labels */
 .modal-content-room label {
-  background-color: var(--info-color); /* Light Blue Background */
-  color: white; /* Text Color */
+  color: darkblue; /* Text Color */
   font-size: 14px;
   font-weight: 600;
   padding: 8px 16px;
-  border-radius: 50px; /* Oval Shape */
+  
   display: inline-block;
   margin: 10px 0;
   text-align: center;

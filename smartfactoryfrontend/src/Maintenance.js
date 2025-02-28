@@ -198,8 +198,8 @@ const Maintenance = () => {
               <label>Problem Description:</label>
               <input type="text" name="problem" value={formData.problem} onChange={handleInputChange} required />
               <div className="modal-actions">
-                <button type="submit" className="confirm-btn">Confirm</button>
-                <button type="button" className="cancel" onClick={closeModal}>Cancel</button>
+                <button type="submit" className="confirm-maint">Confirm</button>
+                <button type="button" className="cancel-maint" onClick={closeModal}>Cancel</button>
               </div>
             </form>
           </div>

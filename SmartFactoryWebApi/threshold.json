@@ -5,12 +5,12 @@
       "name": "TempGuard-500",
       "lowerBound": -10,
       "upperBound": 120,
-      "criticalLowThreshold": 101,
-      "criticalHighThreshold": 120,
-      "normalLowThreshold": -10,
-      "normalHighThreshold": 70,
-      "WarningLowThreshold": 71,
-      "WarningHighThreshold": 100
+      "criticalLowThreshold": 0.0,
+      "criticalHighThreshold": 0.0,
+      "normalLowThreshold": 0.0,
+      "normalHighThreshold": 0.0,
+      "WarningLowThreshold": 0.0,
+      "WarningHighThreshold": 0.0
     },
     {
       "id": "3",
@@ -197,36 +197,36 @@
       "name": "Injection Molding Power Consumption",
       "lowerBound": 0,
       "upperBound": 200,
-      "criticalLowThreshold": 170,
-      "criticalHighThreshold": 200,
-      "normalLowThreshold": 0,
-      "normalHighThreshold": 140,
-      "WarningLowThreshold": 142,
-      "WarningHighThreshold": 198
+      "criticalLowThreshold": 0.0,
+      "criticalHighThreshold": 0.0,
+      "normalLowThreshold": 0.0,
+      "normalHighThreshold": 0.0,
+      "WarningLowThreshold": 0.0,
+      "WarningHighThreshold": 0.0
     },
     {
       "id": "21",
       "name": "Robotic Arm Energy Consumption",
       "lowerBound": 0,
       "upperBound": 1000,
-      "criticalLowThreshold": 850,
-      "criticalHighThreshold": 1000,
-      "normalLowThreshold": 0,
-      "normalHighThreshold": 700,
-      "WarningLowThreshold": 710,
-      "WarningHighThreshold": 990
+      "criticalLowThreshold": 0.0,
+      "criticalHighThreshold": 0.0,
+      "normalLowThreshold": 0.0,
+      "normalHighThreshold": 0.0,
+      "WarningLowThreshold": 0.0,
+      "WarningHighThreshold": 0.0
     },
     {
       "id": "22",
       "name": "Laser Cutting Energy Consumption",
       "lowerBound": 0,
       "upperBound": 15000,
-      "criticalLowThreshold": 12750,
-      "criticalHighThreshold": 15000,
-      "normalLowThreshold": 0,
-      "normalHighThreshold": 10500,
-      "WarningLowThreshold": 10650,
-      "WarningHighThreshold": 14850
+      "criticalLowThreshold": 0.0,
+      "criticalHighThreshold": 0.0,
+      "normalLowThreshold": 0.0,
+      "normalHighThreshold": 0.0,
+      "WarningLowThreshold": 0.0,
+      "WarningHighThreshold": 0.0
     },
     {
       "id": "23",

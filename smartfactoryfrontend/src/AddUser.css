@@ -6,14 +6,12 @@
     --success-color: #2ECC71;
     --form-bg: white;
 }
-
 .add-user-container {
     display: flex;
     height: 100vh;
     background: var(--primary-bg);
     width: 100vw;
 }
-
 .add-user-main {
     flex: 1;
     padding: 40px;
@@ -25,8 +23,8 @@
     margin-left: auto;
     margin-right: auto;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
 }
-
 h1 {
     font-size: 34px;
     font-weight: bold;
@@ -34,7 +32,13 @@ h1 {
     text-align: center;
     margin-bottom: 25px;
 }
-
+h2 {
+    font-size: 34px;
+    font-weight: bold;
+    color: var(--accent-color);
+    text-align: center;
+    margin-top: 25px;
+}
 .add-user-form {
     display: flex;
     flex-direction: column;
@@ -43,11 +47,9 @@ h1 {
     max-width: 600px;
     margin: 0 auto;
 }
-
 .input-group {
     text-align: left;
 }
-
 .input-group label {
     display: block;
     font-size: 16px;
@@ -55,7 +57,6 @@ h1 {
     margin-bottom: 6px;
     color: var(--text-color);
 }
-
 .input-group input,
 .input-group select {
     width: 100%;
@@ -66,14 +67,12 @@ h1 {
     transition: 0.3s ease-in-out;
     background: var(--form-bg);
 }
-
 .input-group input:focus,
 .input-group select:focus {
     outline: none;
     border-color: var(--accent-color);
     box-shadow: 0 0 8px rgba(58, 134, 255, 0.5);
 }
-
 .submit-btn {
     width: 100%;
     padding: 12px;
@@ -86,9 +85,56 @@ h1 {
     background-color: var(--accent-color);
     color: white;
     margin-top: 10px;
+    margin-bottom: 50px;
 }
-
 .submit-btn:hover {
     background-color: darkblue;
     transform: scale(1.05);
+}
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+.user-table thead {
+    background-color: #007BFF;
+    color: white;
+    text-align: left;
+    font-weight: bold;
+}
+.user-table th, .user-table td {
+    padding: 12px 15px;
+    border-bottom: 1px solid #ddd;
+}
+.user-table tbody tr:hover {
+    background-color: #F1F1F1;
+}
+.user-table tbody tr:last-child td {
+    border-bottom: none;
+}
+.delete-btn {
+    background-color: #DC3545;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+}
+.delete-btn:hover {
+    background-color: #C82333;
+}
+@media (max-width: 768px) {
+    .user-table th, .user-table td {
+        padding: 10px;
+        font-size: 14px;
+    }
+    .delete-btn {
+        padding: 6px 10px;
+        font-size: 12px;
+    }
 }

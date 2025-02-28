@@ -11,13 +11,14 @@ const Room = () => {
   const [showModal, setShowModal] = useState(false);
   const [modalType, setModalType] = useState("");
   const [thresholds, setThresholds] = useState({
-    warningUpper: "",
-    warningLower: "",
-    criticalUpper: "",
-    criticalLower: "",
-    normalUpper: "",
-    normalLower: "",
+    warningUpper: null,
+    warningLower: null,
+    criticalUpper: null,
+    criticalLower: null,
+    normalUpper: null,
+    normalLower: null,
   });
+  
   const fetchSensors = async (roomName) => {
     try {
       const response = await fetch(`http://localhost:5270/api/Device/GetDevicesByRoomName?roomName=${roomName}`);
@@ -47,6 +48,31 @@ const Room = () => {
       console.error("Error fetching trending data:", error);
     }
   };
+
+  const fetchThresholds = async (sensorId) => {
+    try {
+      const response = await fetch(`http://localhost:5270/api/Device/GetThresholdById/${sensorId}`);
+      if (!response.ok) {
+        throw new Error("Failed to fetch threshold data");
+      }
+      const data = await response.json();
+      console.log("Fetched threshold data:", data); // Debugging
+  
+      setThresholds({
+        warningUpper: data.warningHighThreshold !== undefined ? data.warningHighThreshold : 0,
+        warningLower: data.warningLowThreshold !== undefined ? data.warningLowThreshold : 0,
+        criticalUpper: data.criticalHighThreshold !== undefined ? data.criticalHighThreshold : 0,
+        criticalLower: data.criticalLowThreshold !== undefined ? data.criticalLowThreshold : 0,
+        normalUpper: data.normalHighThreshold !== undefined ? data.normalHighThreshold : 0,
+        normalLower: data.normalLowThreshold !== undefined ? data.normalLowThreshold : 0,
+      });
+      
+      console.log("Updated state:",thresholds);
+    } catch (error) {
+      console.error("Error fetching threshold data:", error);
+    }
+  };
+  
 
   const fetchCategories = async () => {
     try {
@@ -81,32 +107,47 @@ const Room = () => {
   const prevRoom = () => {
     setCurrentRoomIndex((prevIndex) => (prevIndex - 1 + rooms.length) % rooms.length);
   };
-  const openThresholdModal = (sensor) => {
+  const openThresholdModal = async (sensor) => {
     setSelectedSensor(sensor);
     setModalType("threshold");
+    await fetchThresholds(sensor.id);
     setShowModal(true);
   };
   const handleThresholdChange = (e) => {
-    setThresholds({ ...thresholds, [e.target.name]: e.target.value });
+    const value = e.target.value === "" ? "" : parseFloat(e.target.value);
+    setThresholds((prevThresholds) => ({
+      ...prevThresholds,
+      [e.target.name]: value
+    }));
   };
+  
   const saveThreshold = async () => {
+    console.log("Threshold Data Before Sending:", thresholds);
     try {
-      const response = await fetch("http://localhost:5270/api/Device/UpdateThreshold", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+      const response = await fetch("http://localhost:5270/api/Device/UpdateDeviceThreshold", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
         body: JSON.stringify({
-          sensorId: selectedSensor.id,
-          ...thresholds,
+          deviceId: selectedSensor.id,
+          normalLowThreshold: thresholds.normalLowThreshold ? parseFloat(thresholds.normalLowThreshold) : 0.0,
+          normalHighThreshold: thresholds.normalHighThreshold ? parseFloat(thresholds.normalHighThreshold) : 0.0,
+          warningLowThreshold: thresholds.warningLowThreshold ? parseFloat(thresholds.warningLowThreshold) : 0.0,
+          warningHighThreshold: thresholds.warningHighThreshold ? parseFloat(thresholds.warningHighThreshold) : 0.0,
+          criticalLowThreshold: thresholds.criticalLowThreshold ? parseFloat(thresholds.criticalLowThreshold) : 0.0,
+          criticalHighThreshold: thresholds.criticalHighThreshold ? parseFloat(thresholds.criticalHighThreshold) : 0.0,
         }),
       });
       if (!response.ok) {
-        throw new Error("Failed to update threshold");
+        throw new Error(`Failed to update threshold: ${response.statusText}`);
       }
       setShowModal(false);
     } catch (error) {
       console.error("Error updating threshold:", error);
     }
   };
+  
 
 
   const openChartModal = (sensor) => {
@@ -179,12 +220,12 @@ const Room = () => {
         <div>
           <h3>Set Threshold for {selectedSensor?.name}</h3>
           <div className="threshold-form">
-          <label>Normal Lower: <input type="number" name="normalLowThreshold" onChange={handleThresholdChange} /></label>
-            <label>Normal Upper: <input type="number" name="normalHighThreshold" onChange={handleThresholdChange} /></label>
-            <label>Warning Lower: <input type="number" name="warningLowThreshold" onChange={handleThresholdChange} /></label>
-            <label>Warning Upper: <input type="number" name="warningHighThreshold" onChange={handleThresholdChange} /></label>
-            <label>Critical Lower: <input type="number" name="criticalLowThreshold" onChange={handleThresholdChange} /></label>
-            <label>Critical Upper: <input type="number" name="criticalHighThreshold" onChange={handleThresholdChange} /></label>
+          <label>Normal Lower: <input type="number" name="normalLower" value={thresholds.normalLower ?? ""} onChange={handleThresholdChange} /></label>
+            <label>Normal Upper: <input type="number" name="normalUpper" value={thresholds.normalUpper ?? ""} onChange={handleThresholdChange} /></label>
+            <label>Warning Lower: <input type="number" name="warningLower" value={thresholds.warningLower ?? ""} onChange={handleThresholdChange} /></label>
+            <label>Warning Upper: <input type="number" name="warningUpper" value={thresholds.warningUpper ?? ""} onChange={handleThresholdChange} /></label>
+            <label>Critical Lower: <input type="number" name="criticalLower" value={thresholds.criticalLower ?? ""} onChange={handleThresholdChange} /></label>
+            <label>Critical Upper: <input type="number" name="criticalUpper" value={thresholds.criticalUpper ?? ""} onChange={handleThresholdChange} /></label>
             <button className="confirm-btn" onClick={saveThreshold}>Save</button>
           </div>
         </div>

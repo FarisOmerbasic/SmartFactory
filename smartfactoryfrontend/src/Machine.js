@@ -73,7 +73,7 @@ const Machine = () => {
       <main className="main-content">
         <h1>Machine Status Overview</h1>
 
-        <div className="cards">
+        <div className="cards-machine">
           <div className="card-run">
             <CircleCheck className="icon green" size={24} />
             <p>Running</p>
