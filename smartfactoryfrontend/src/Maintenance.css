@@ -254,7 +254,14 @@ button:hover {
   padding: 8px 15px;
   cursor: pointer;
 }
-.cancel-btn {
+.cancel{
+  background: red;
+  color: white;
+  border: none;
+  padding: 8px 15px;
+  cursor: pointer;
+}
+.cancel-btn,.delete-btn {
   background: red;
   color: white;
   border: none;
@@ -271,3 +278,4 @@ button:hover {
   border-radius: 5px;
   animation: fadeIn 0.5s ease-in-out;
 }
+
