@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
+using SmartFactoryWebApi.Dtos;
 using SmartFactoryWebApi.Models;
 using SmartFactoryWebApi.Services;
 
@@ -65,9 +66,18 @@ namespace SmartFactoryWebApi.Controllers
         //[HttpGet("RenderPDF")]
         //public ActionResult RenderPDF()
         //{
-        //    _renderPDF.RednderProductionReport();
+        //    //var userDto = new User
+        //    //{
+        //    //    FirstName = "Emin",
+        //    //    LastName = "Brankovic",
+        //    //    Email = "emin@gmail.com",
+        //    //    Role = UserRoles.SuperUser
+        //    //};
 
-        //    return Ok();
+
+        //    //_renderPDF.RenderUserRegisterReport(userDto);
+
+        //    //return Ok();
 
         //}
     }

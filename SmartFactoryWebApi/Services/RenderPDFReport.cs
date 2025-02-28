@@ -6,6 +6,8 @@ using System.ComponentModel;
 using SmartFactoryWebApi.Models;
 using System.Text;
 using SmartFactoryWebApi.Controllers;
+using SmartFactoryWebApi.Dtos;
+using System.Xml.Linq;
 
 namespace SmartFactoryWebApi.Services
 {
@@ -15,14 +17,6 @@ namespace SmartFactoryWebApi.Services
         {
             QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
         }
-
-        //List<(int Id, string Name, string Category, double Price)> data = new List<(int Id, string Name, string Category, double Price)>
-        //{
-        //    (1, "Smart Sensor", "IoT", 199.99),
-        //    (2, "Industrial Robot Arm", "Automation", 4999.50),
-        //    (3, "Conveyor Belt", "Logistics", 1299.99),
-        //    (4, "AI Vision System", "Quality Control", 2999.00),
-        //};
 
 
         public byte[] RednderProductionReport(RenderPDFRequest request)
@@ -146,6 +140,96 @@ namespace SmartFactoryWebApi.Services
             return document.GeneratePdf();
         }
 
+        public byte[] RenderUserRegisterReport(User request)
+        {
+            var document = Document.Create(container =>
+            {
+                container.Page(page =>
+                {
+                    page.Size(PageSizes.A4);
+                    page.Margin(2, QuestPDF.Infrastructure.Unit.Centimetre);
+
+                    page.Header()
+                        .AlignCenter()
+                        .Column(column =>
+                        {
+                            column.Spacing(0);
+
+                            //Logo
+                            column.Item().Width(100).AlignCenter().Image("Images\\FactoryLogo.png");
+
+                            //Company Name
+                            //column.Item().AlignCenter().PaddingBottom(25).Text("Lend A Car")
+                            //    .FontSize(16)
+                            //    .Bold();
+
+                        });
+
+
+                    page.Content()
+                        .AlignCenter()
+                        .Column(column =>
+                        {
+                            column.Spacing(15);
+
+                            column.Item().AlignCenter().PaddingBottom(10).Width(350).LineHorizontal(2);
+
+
+                            column.Item().AlignCenter().PaddingBottom(20).Text($"Welcome to the company {request.FirstName}")
+                                .Bold()
+                                .FontSize(25);
+
+
+                            column.Item().AlignCenter().PaddingBottom(20).Text("Employee System Access Data")
+                                .SemiBold()
+                                .FontSize(17);
+
+
+
+                            column.Item().AlignCenter().Table(table =>
+                            {
+                                table.ColumnsDefinition(columns =>
+                                {
+                                    columns.ConstantColumn(120); //Email Column 
+                                    columns.ConstantColumn(120); //Password Column 
+                                });
+
+                                //Table Header
+                                table.Header(header =>
+                                {
+                                    header.Cell().Background(Colors.LightBlue.Darken2).Border(1).AlignCenter().Text("Email").Bold();
+                                    header.Cell().Background(Colors.LightBlue.Darken2).Border(1).AlignCenter().Text("Password").Bold();
+                                });
+
+                                //Table Rows 
+                                table.Cell().Border(1).AlignCenter().Text(request.Email);
+                                table.Cell().Border(1).AlignCenter().Text(request.Password);
+                            });
+
+                            //Warning message
+                            column.Item().PaddingTop(20).AlignCenter().Text("Note that this information is highly confidential, don't share it with anyone!").FontColor(Colors.Red.Medium)
+                            .FontSize(10);
+                        });
+
+                    page.Footer()
+                    .Column(column =>
+                    {
+                        column.Item()
+                        .PaddingVertical(10)
+                        .Text(text =>
+                        {
+                            text.Span("Page ");
+                            text.CurrentPageNumber();
+                            text.Span(" of ");
+                            text.TotalPages();
+                            text.AlignCenter();
+                        });
+                    });
+                });
+            });
+
+            return document.GeneratePdf();
+        }
     }
 
 

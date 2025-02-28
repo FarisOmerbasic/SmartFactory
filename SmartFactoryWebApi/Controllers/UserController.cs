@@ -3,24 +3,37 @@ using Microsoft.AspNetCore.Mvc;
 using SmartFactoryWebApi.Dtos;
 using SmartFactoryWebApi.InMemoryRepositories;
 using SmartFactoryWebApi.Models;
+using SmartFactoryWebApi.Services;
 
 namespace SmartFactoryWebApi.Controllers
 {  
     [Route("api/[controller]")]
     [ApiController]
-    public class UserController : ControllerBase
+    public class UserController(IRenderPDFReport renderPDF) : ControllerBase
     {
 
         [HttpPost("register")]
-        public ActionResult<string> Register([FromBody] User request)
+        public ActionResult<string> Register([FromBody] UserDto request)
         {
             var user = UserRepository.GetUserByEmail(request.Email);
 
             if (user!=null) return BadRequest("User already exists with that email");
 
-            UserRepository.AddUser(request);
+            var userResponse = new User
+            {
+                Id = UserRepository.Users.Count()+1,
+                FirstName = request.FirstName,
+                LastName = request.LastName,
+                Email = request.Email,
+                Role = request.Role,
+                Password = RandomString(10)
+            };
 
-            return Ok("User created");
+            UserRepository.AddUser(userResponse);
+
+            var pdf = renderPDF.RenderUserRegisterReport(userResponse);
+
+            return File(pdf, "application/pdf", $"employee_{userResponse.FirstName}_{userResponse.LastName}.pdf");
         }
 
 
@@ -75,6 +88,25 @@ namespace SmartFactoryWebApi.Controllers
             UserRepository.RemoveUser(user);
 
             return Ok("User removed");
+        }
+
+
+
+
+        private string RandomString(int size)
+        {
+            const string characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*-_?";
+            string result = string.Empty;
+            int charactersLength = characters.Length;
+
+            Random random = new Random();
+            for (int i = 0; i < size; i++)
+            {
+                int randomIndex = random.Next(charactersLength);
+                result += characters[randomIndex];
+            }
+
+            return result;
         }
     }
 
