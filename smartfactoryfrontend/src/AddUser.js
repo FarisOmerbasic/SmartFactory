@@ -7,10 +7,20 @@ const AddUser = () => {
         firstName: "",
         lastName: "",
         email: "",
-        password: "",
         role: "",
     });
     const [users, setUsers] = useState([]);
+
+    // Mapa koja povezuje uloge sa brojevima
+    const roleMap = {
+        SuperUser: 1,
+        FactoryManager: 2,
+        Maintenance: 3,
+        Supervisors: 4,
+        Administrator: 5,
+        Operations: 6,
+        User: 7,
+    };
 
     useEffect(() => {
         fetchUsers();
@@ -36,48 +46,18 @@ const AddUser = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const roleMapping = {
-            SuperUser: 1,
-            FactoryManager: 2,
-            Maintenance: 3,
-            Supervisors: 4,
-            Administrator: 5,
-            Operations: 6,
-            User: 7,
-        };
+        // Pretvori ulogu u broj pomoću roleMap
+        const roleNumber = roleMap[userData.role] || null; // Ako nema uloge, setuj null
 
-        const payload = {
-            id: 0,
+        const requestBody = {
             firstName: userData.firstName,
             lastName: userData.lastName,
             email: userData.email,
-            password: userData.password,
-            role: roleMapping[userData.role] || 0,
+            role: roleNumber,
         };
 
-        try {
-            const response = await fetch("http://localhost:5270/api/User/register", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(payload),
-            });
-
-            const text = await response.text();
-            console.log("Server Response:", text);
-
-            if (response.ok) {
-                alert("✅ " + text);
-                setUserData({ firstName: "", lastName: "", email: "", password: "", role: "" });
-                fetchUsers(); // Refresh users list
-            } else {
-                alert("❌ Error adding user: " + text);
-            }
-        } catch (error) {
-            console.error("Error:", error);
-            alert("❌ Failed to send request. Check console for details.");
-        }
+        // Pozovi funkciju za generisanje PDF-a sa brojem uloge
+        generatePDF(requestBody);
     };
 
     const handleDelete = async (id) => {
@@ -103,11 +83,50 @@ const AddUser = () => {
         }
     };
 
+    const generatePDF = async (userData) => {
+        try {
+            const requestBody = {
+                firstName: userData.firstName,
+                lastName: userData.lastName,
+                email: userData.email,
+                role: userData.role, // Ovdje će biti broj umesto imena
+            };
+
+            console.log('Request body:', requestBody); // Proveri šta šalješ
+
+            const response = await fetch("http://localhost:5270/api/User/register", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(requestBody),
+            });
+
+            console.log('Response status:', response.status); // Loguj status odgovora
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error("Error response from server:", errorText);
+                throw new Error("Failed to generate PDF");
+            }
+
+            const blob = await response.blob();
+            console.log('Blob received:', blob); // Loguj blob kako bi proverio da li je vraćen PDF
+
+            const pdfUrl = URL.createObjectURL(blob);
+            window.open(pdfUrl);
+
+        } catch (error) {
+            console.error("Error generating PDF:", error);
+            alert("❌ Failed to generate PDF. Check console for details.");
+        }
+    };
+
     return (
         <div className="add-user-container">
             <Menu />
             <main className="add-user-main">
-                <h1>Add New User</h1>
+                <h1>Generate PDF with User Data</h1>
                 <form onSubmit={handleSubmit} className="add-user-form">
                     <div className="input-group">
                         <label>First Name</label>
@@ -122,10 +141,6 @@ const AddUser = () => {
                         <input type="email" name="email" value={userData.email} onChange={handleChange} required />
                     </div>
                     <div className="input-group">
-                        <label>Password</label>
-                        <input type="password" name="password" value={userData.password} onChange={handleChange} required />
-                    </div>
-                    <div className="input-group">
                         <label>Role</label>
                         <select name="role" value={userData.role} onChange={handleChange} required>
                             <option value="">Select Role</option>
@@ -138,9 +153,9 @@ const AddUser = () => {
                             <option value="User">User</option>
                         </select>
                     </div>
-                    <button type="submit" className="submit-btn">Add User</button>
+                    <button type="submit" className="submit-btn">Generate PDF</button>
                 </form>
-                
+
                 <h2>User List</h2>
                 <table className="user-table">
                     <thead>
@@ -160,7 +175,7 @@ const AddUser = () => {
                                 <td>{user.firstName}</td>
                                 <td>{user.lastName}</td>
                                 <td>{user.email}</td>
-                                <td>{user.role}</td>
+                                <td>{roleMap[user.role] || user.role}</td> {/* Prikazivanje broja ili imena uloge */}
                                 <td>
                                     <button className="delete-btn" onClick={() => handleDelete(user.id)}>Delete</button>
                                 </td>
