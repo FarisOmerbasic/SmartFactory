@@ -21,6 +21,7 @@ namespace SmartFactoryWebApi.Controllers
 
             var temperatureMachines = result.Where(m => m.Group2 == "Temperature Sensor").ToList();
 
+            //za ove dodati thresholds tj prevesti u Dto
             var machines = temperatureMachines.Where(s => s.Name.Contains("Machine")).ToList();
 
 
@@ -53,9 +54,9 @@ namespace SmartFactoryWebApi.Controllers
                 {
                     MachineName = machineNames[i],
                     Status = "Runing",
-                    UpTime = new Random().Next(70, 300),
+                    UpTime = await GetUptime(machines[i], cancellationToken),
                     Temperature = machines[i].NumericValue
-                });
+                }); ;
             }
 
 
@@ -138,7 +139,29 @@ namespace SmartFactoryWebApi.Controllers
             return "Normal";
         }
 
+
+        private async Task<int> GetUptime(Sensor sensor, CancellationToken cancellationToken)
+        {
+            var id = int.Parse(sensor.Id);
+            var trending = await dataMinerConnection.GetDeviceTrending(id, cancellationToken);
+
+            var firstTime = trending[0].Time;
+
+            DateTime currentTime = DateTime.Now;
+            
+            int hoursDifference = (int)Math.Round((currentTime-firstTime).TotalHours);
+
+            return hoursDifference;
+        }
+
+
     }
+
+
+
+
+
+
 
     public class MachineOverviewResponse
     {
@@ -146,6 +169,5 @@ namespace SmartFactoryWebApi.Controllers
         public string Status { get; set; }
         public int UpTime { get; set; }
         public double Temperature { get; set; }
-
     }
 }

@@ -106,8 +106,8 @@ namespace SmartFactoryWebApi.Services
                   .SelectMany(records => records)
                   .Select(record => new SensorDataDto
                   {
-                      Time = record.Time.ToString("HH:mm:ss"), 
-                      Value = double.Parse(record.Value) 
+                      Time = record.Time,
+                      Value = double.Parse(record.Value)
                   })
                   .ToList();
 
