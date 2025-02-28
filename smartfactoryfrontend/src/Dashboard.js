@@ -151,8 +151,17 @@ const Dashboard = () => {
           </div>
         </div>      
 
-        
-
+                {/* New Section for Critical Machines */}
+                <h1>Critical Alarms</h1>
+                <div className="critical-cards">
+                    {criticalMachines.map((machine) => (
+                        <div className="card" key={machine.id}>
+                            <h2>{machine.name}</h2>
+                            <p>Current Value: {machine.numericValue} {machine.unit}</p>
+                            <small>Location: {machine.group1}</small>
+                        </div>
+                    ))}
+                </div>
             </main>
         </div>
     );
